@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/bower_components/bootstrap/dist/css/bootstrap.css}"></link>
+<link rel="stylesheet" th:href="@{/bower_components/tether/dist/css/tether.css}"></link>
+</head>
+<body>
+	<h1 th:text="${titulo}"></h1>
+	<p>
+		Esta es la vista con HTML
+	</p>
+<script th:src="@{/bower_components/jquery/dist/jquery.js}"></script>
+<script th:src="@{/bower_components/tether/dist/js/tether.js}"></script>
+</body>
+</html>
