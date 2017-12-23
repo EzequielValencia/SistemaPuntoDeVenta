@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+</head>
+<body>
+	<nav th:replace="layout/layout :: nav"></nav>
+
+	<div class="container text-center">
+		<h1 class="display-3">Lista de clientes</h1>
+		<hr class="bg-danger"/>
+		<table	class="table table-striped table-responsive table-bordered text-center">
+			<thead class="thead-inverse">
+				<tr>
+					<th>ID</th>
+					<th>Nombre</th>
+					<th>Apellido Paterno</th>
+					<th>Apellido Materno</th>
+					<th>Compañia</th>
+					<th>Correo</th>
+					<th>Fecha de creación</th>
+					<th>Editar</th>
+					<th>Eliminar</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="cliente:${clientes}">
+					<td th:text="${cliente.id}"></td>
+					<td th:text="${cliente.nombre}"></td>
+					<td th:text="${cliente.apellidoPaterno}"></td>
+	
+					<td th:text="${cliente.apellidoMaterno}"></td>
+	
+					<td th:text="${cliente.compania}"></td>
+	
+					<td th:text="${cliente.correo}"></td>
+	
+					<td th:text="${cliente.fechaCreacion}"></td>
+	
+					<td>
+						<button type="button" class="btn btn-warning">Editar</button>
+	
+					</td>
+					<td>
+						<button type="button" class="btn btn-danger">Eliminar</button>
+					</td>
+	
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

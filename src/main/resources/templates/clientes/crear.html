@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+</head>
+<body>
+	<nav th:replace="layout/layout :: nav"></nav>
+
+	<div class="container py-5">
+		<div class="card bg-inverse text-white ">
+			<div class="card-block">
+				<h3 class="card-title">Agregar Cliente</h3>
+				<form th:action="@{/clientes/crear}" method="post" th:object="${nuevoCliente}">
+					<div class="form-group row">
+						<label for="example-text-input" class="col-2 col-form-label">Nombre</label>
+						<div class="col-10">
+							<input class="form-control" type="text" th:field="*{nombre}"
+								id="example-text-input" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="example-search-input" class="col-2 col-form-label">Apellido Paterno</label>
+						<div class="col-10">
+							<input class="form-control" type="text"
+								th:field="*{apellidoPaterno}" id="example-search-input" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="example-email-input" class="col-2 col-form-label">Apellido Materno</label>
+						<div class="col-10">
+							<input class="form-control" type="text"
+								th:field="*{apellidoMaterno}" id="example-email-input" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="example-url-input" class="col-2 col-form-label">Compañia</label>
+						<div class="col-10">
+							<input class="form-control" th:field="*{compania}" 
+								type="text" id="example-url-input" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="example-tel-input" class="col-2 col-form-label">Correo</label>
+						<div class="col-10">
+							<input class="form-control" type="email" th:field="*{correo}"
+								id="example-tel-input" />
+						</div>
+					</div>
+					<button type="submit" class="btn btn-success float-right">Crear</button>
+					<button type="reset" class="btn btn-secondary float-left">Borrar
+						Campos</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

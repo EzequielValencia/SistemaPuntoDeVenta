@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www,thymeleafe.org">
+<head th:fragment="head">
+<meta charset="UTF-8" />
+<title>SYTPV</title>
+<link rel="shortcut icon" type="image/png" th:href="@{/img/icon.ico}" />
+<link rel="stylesheet"
+	th:href="@{/bower_components/bootstrap/dist/css/bootstrap.min.css}" />
+<link rel="stylesheet"
+	th:href="@{/bower_components/tether/dist/css/tether.css}"></link>
+</head>
+<body>
+
+	<nav th:fragment="nav"
+		class="navbar navbar-toggleable-md navbar-inverse bg-inverse sticky-top">
+		<button class="navbar-toggler navbar-toggler-right" type="button"
+			data-toggle="collapse" data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<a class="navbar-brand" th:href="@{/}"><img
+			th:src="@{/img/icon.ico}" width="30" height="30" />SYTPV</a>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link" href="#">Articulos
+						<span class="sr-only">(current)</span>
+				</a></li>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="http://example.com"
+					id="navbarDropdownMenuLink" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false"> Clientes </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" th:href="@{/clientes/listar}">Lista
+							Clientes</a> <a class="dropdown-item" th:href="@{/clientes/crear}">Agregar
+							Cliente</a>
+					</div></li>
+			</ul>
+		</div>
+	</nav>
+
+
+	<footer th:fragment="footer">
+		<script type="text/javascript"
+			th:src="@{/bower_components/jquery/dist/jquery.js}"></script>
+		<script type="text/javascript"
+			th:src="@{/bower_components/tether/dist/js/tether.js}"></script>
+		<script type="text/javascript"
+			th:src="@{/bower_components/bootstrap/dist/js/bootstrap.js}"></script>
+	</footer>
+</body>
+</html>
