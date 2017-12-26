@@ -28,17 +28,30 @@ public class ClienteDaoImplements implements IClienteDao {
 	@Override
 	@Transactional
 	public void save(Cliente cliente) {
-		System.out.println("Guardando "+cliente);
-		if(cliente.getId()>0 & cliente.getId()!=null) {
-			System.out.println("Editado "+em.merge(cliente));
-		}
+		System.out.println("Cliente entrante "+cliente);
+		if(cliente.getId()!=null) {
+			em.merge(cliente);
+		}else{
+			System.out.println("Cliente a guardar "+cliente);
 		em.persist(cliente);
+		}
 	}
 
+	
+	
+	@Transactional(readOnly=true)
 	@Override
 	public Cliente findOne(Long id) {
 		// TODO Auto-generated method stub
 		return em.find(Cliente.class, id);
+	}
+
+
+	@Override
+	@Transactional
+	public void removeOne(Cliente cliente) {
+		// TODO Auto-generated method stub
+		em.remove(cliente);
 	}
 
 }

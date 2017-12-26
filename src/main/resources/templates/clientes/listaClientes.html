@@ -45,8 +45,7 @@
 						<a  class="btn btn-warning" th:href="@{/clientes/}+${cliente.id}">Editar</a>
 					</td>
 					<td>
-						<button type="button" class="btn btn-danger"
-							th:attr="data-cliente=${cliente.id}">Eliminar</button>
+						<a class="btn btn-danger" th:href="@{/clientes/eliminar/}+${cliente.id}">Eliminar</a>
 					</td>
 
 				</tr>

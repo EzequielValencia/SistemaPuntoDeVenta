@@ -59,4 +59,10 @@ public class ClienteController {
 		clienteDao.save(cliente);
 		return "redirect:listar";
 	}
+	
+	@GetMapping(value="/eliminar/{id}")
+	public String eliminarCliente(@PathVariable(value="id") Long id){
+		clienteDao.removeOne(clienteDao.findOne(id));
+		return "redirect:listar";
+	}
 }
