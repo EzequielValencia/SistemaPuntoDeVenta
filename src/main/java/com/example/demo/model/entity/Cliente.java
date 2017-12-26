@@ -12,6 +12,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name="clientes")
@@ -21,16 +22,19 @@ public class Cliente implements Serializable{
 	private static final long serialVersionUID = 7995560717675124845L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long id;
+	private Long id;
+	@NotEmpty
 	private String nombre;
-	
+	@NotEmpty
 	@Column(name="apellido_paterno")
 	private String apellidoPaterno;
-	
+	@NotEmpty
 	@Column(name="apellido_materno")
 	private String apellidoMaterno;
 	
 	private String compania;
+	
+	@NotEmpty
 	@Email
 	private String correo;
 	
@@ -50,11 +54,11 @@ public class Cliente implements Serializable{
 		this.compania = compania;
 	}
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 	
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	

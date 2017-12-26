@@ -23,18 +23,12 @@
 			th:src="@{/img/icon.ico}" width="30" height="30" />SYTPV</a>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"><a class="nav-link" href="#">Articulos
-						<span class="sr-only">(current)</span>
+				<li class="nav-item "><a class="nav-link" href="#">Articulos
 				</a></li>
-				<li class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle" href="http://example.com"
-					id="navbarDropdownMenuLink" data-toggle="dropdown"
+				<li class="nav-item">
+					<a	class="nav-link " th:href="@{/clientes/listar}"
 					aria-haspopup="true" aria-expanded="false"> Clientes </a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<a class="dropdown-item" th:href="@{/clientes/listar}">Lista
-							Clientes</a> <a class="dropdown-item" th:href="@{/clientes/crear}">Agregar
-							Cliente</a>
-					</div></li>
+				</li>
 			</ul>
 		</div>
 	</nav>

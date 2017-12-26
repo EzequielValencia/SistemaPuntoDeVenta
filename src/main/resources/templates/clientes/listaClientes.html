@@ -7,8 +7,13 @@
 
 	<div class="container text-center">
 		<h1 class="display-3">Lista de clientes</h1>
-		<hr class="bg-danger"/>
-		<table	class="table table-striped table-responsive table-bordered text-center">
+		<hr class="bg-danger" />
+		<p class="text-left">
+			<a class="btn btn-outline-success btn-sm "
+				th:href="@{/clientes/crear}">Crear nuevo cliente</a>
+		</p>
+		<table
+			class="table table-striped table-responsive table-bordered text-center">
 			<thead class="thead-inverse">
 				<tr>
 					<th>ID</th>
@@ -27,27 +32,88 @@
 					<td th:text="${cliente.id}"></td>
 					<td th:text="${cliente.nombre}"></td>
 					<td th:text="${cliente.apellidoPaterno}"></td>
-	
+
 					<td th:text="${cliente.apellidoMaterno}"></td>
-	
+
 					<td th:text="${cliente.compania}"></td>
-	
+
 					<td th:text="${cliente.correo}"></td>
-	
+
 					<td th:text="${cliente.fechaCreacion}"></td>
-	
+
 					<td>
-						<button type="button" class="btn btn-warning">Editar</button>
-	
+						<a  class="btn btn-warning" th:href="@{/clientes/}+${cliente.id}">Editar</a>
 					</td>
 					<td>
-						<button type="button" class="btn btn-danger">Eliminar</button>
+						<button type="button" class="btn btn-danger"
+							th:attr="data-cliente=${cliente.id}">Eliminar</button>
 					</td>
-	
+
 				</tr>
 			</tbody>
 		</table>
 	</div>
+
+
+
+	<div class="modal fade" id="modalEdicionCliente" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="tituloModalEdicion"></h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group row">
+						<input type="hidden" name="id" id="id"/>
+						<input type="hidden" name="fechaCreacion" id="fechaCreacion"/>
+						<label for="example-text-input" class="col-2 col-form-label">Nombre</label>
+						<div class="col-10">
+							<input class="form-control" type="text" name="nombreNuevo" id="nombreNuevo"/>
+
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="example-search-input" class="col-2 col-form-label">Apellido
+							Paterno</label>
+						<div class="col-10">
+							<input class="form-control" type="text"	name="apellidoPaternoNuevo" id="apellidoPaternoNuevo" />
+
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="example-email-input" class="col-2 col-form-label">Apellido
+							Materno</label>
+						<div class="col-10">
+							<input class="form-control" type="text" name="apellidoMaternoNuevo" id="apellidoMaternoNuevo" />
+
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="example-url-input" class="col-2 col-form-label">Compañia</label>
+						<div class="col-10">
+							<input class="form-control" name="companiaNuevo" type="text" id="companiaNuevo" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="example-tel-input" class="col-2 col-form-label">Correo</label>
+						<div class="col-10">
+							<input class="form-control" type="mail" name="correoNuevo"	id="correoNuevo" />
+						</div>
+					</div>
+					<hr/>
+					<button type="submit" id="guardarCambiosCliente" class="btn btn-success float-right">Crear</button>
+					<button type="reset" class="btn btn-secondary float-left">Borrar Campos</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<footer th:replace="layout/layout :: footer"></footer>
+	<script type="text/javascript" th:src="@{/js/clientes.js}"></script>
 </body>
 </html>
