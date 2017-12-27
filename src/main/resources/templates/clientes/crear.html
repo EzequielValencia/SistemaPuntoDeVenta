@@ -62,7 +62,7 @@
 								<small class="form-text text-danger" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}"></small>
 						</div>
 					</div>
-					<button type="submit" class="btn btn-success float-right">Crear</button>
+					<button type="submit" class="btn btn-success float-right" th:text="${mensajeBoton}"></button>
 					<button type="reset" class="btn btn-secondary float-left">Borrar
 						Campos</button>
 				</form>

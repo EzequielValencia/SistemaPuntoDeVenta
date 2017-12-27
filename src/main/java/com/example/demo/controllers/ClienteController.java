@@ -31,16 +31,19 @@ public class ClienteController {
 	public String crearCliente(Model model){
 		Cliente cliente = new Cliente();
 		model.addAttribute("cliente",cliente);
+		model.addAttribute("mensajeBoton","Crear");
 		return "clientes/crear";
 	}
 	
 	@PostMapping(value="/crear")
 	public String crearClienteNuevo(@Valid Cliente cliente, BindingResult result) {
+		System.out.println("Cliente al entrar "+cliente);
 		if(result.hasErrors()) {
 			System.out.println(result.getAllErrors());
 			return "clientes/crear";
 		}
 		clienteDao.save(cliente);
+		System.out.println("Cliente despues de la accion: "+cliente);
 		return "redirect:listar";
 	}
 	
@@ -51,6 +54,7 @@ public class ClienteController {
 		model.addAttribute("cliente", cliente);
 		model.addAttribute("titulo","Actualizar datos de "+cliente.getNombre()+" "+cliente.getApellidoPaterno()+
 				" "+cliente.getApellidoMaterno());
+		model.addAttribute("mensajeBoton","Actualizar");
 		return "clientes/crear";
 	}
 	
@@ -63,6 +67,6 @@ public class ClienteController {
 	@GetMapping(value="/eliminar/{id}")
 	public String eliminarCliente(@PathVariable(value="id") Long id){
 		clienteDao.removeOne(clienteDao.findOne(id));
-		return "redirect:listar";
+		return "redirect:/clientes/listar";
 	}
 }
