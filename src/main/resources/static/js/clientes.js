@@ -2,31 +2,91 @@ angular.module("SistemaPuntoDeVenta")
 .controller("seccionClientes",function($scope,$http){
 	$scope.clientes;
 
-	$http({
-	    method: 'GET', 
-	    url: url_principal+"clientes/listar2"
-	}).then(function successCallback(data) {
-		$scope.clientes=data.data;
-	},function errorCallback(e){
-		console.log(e);
-	});
+	getClientes();
 
 	$scope.eliminarCliente = function(idClienteEliminar){
 		console.log("Eliminar cliente "+idClienteEliminar);
+		$http({
+		    method: 'GET', 
+		    url: url_principal+"clientes/buscarCliente/"+idClienteEliminar
+		}).then(function successCallback(data) {
+			
+			$scope.clienteEliminar = data.data;
+			$('#modalELiminarCliente').modal('show');
+			
+		},function errorCallback(e){
+			console.log(e);
+		});
+		$scope.idClienteAEliminar= idClienteEliminar;
 	}
 	
 	$scope.editarCliente=function(idClienteEditar){
-		console.log("Editar cliente "+idClienteEditar);
-		$scope.clientes.forEach(function(cliente){
-			if(cliente.id==idClienteEditar){
-				$scope.clienteEditar=cliente;
-				console.log($scope.clienteEditar);
-				$('#modalEdicionCliente').modal('show');
-			}
+		console.log("Editar cliente ");
+		$http({
+		    method: 'GET', 
+		    url: url_principal+"clientes/buscarCliente/"+idClienteEditar
+		}).then(function successCallback(data) {			
+			
+			$scope.clienteEditar = data.data;
+			$('#modalEdicionCliente').modal('show');
+			
+		},function errorCallback(e){
+			console.log(e);
 		});
 	}
 	
-
+	
+	$scope.borrarClienteEnDB=function(){
+		$http({
+		    method: 'GET', 
+		    url : url_principal+"clientes/eliminar/"+$scope.clienteEliminar.id
+		}).then(function successCallback(data) {
+			getClientes();
+			$("#modalELiminarCliente").modal('hide');
+			mostrarAlerta("Cliente eliminado con exito","danger");
+		},function errorCallback(e){
+			console.log(e);
+		});
+	}
+	
+	$scope.actualizarDatosCliente=function(){
+		$http({
+		    method: 'POST', 
+		    url : url_principal+"clientes/guardarCambiosCliente",
+		    data :JSON.stringify($scope.clienteEditar)
+		}).then(function successCallback(data) {
+			getClientes();
+			$("#modalEdicionCliente").modal('hide');
+			mostrarAlerta("Actualización de datos exitosa","info");
+		},function errorCallback(e){
+			console.log(e);
+		});
+	}
+	
+	$scope.agregarCliente=function(){
+		$http({
+		    method: 'POST', 
+		    url : url_principal+"clientes/crear",
+		    data :JSON.stringify($scope.clienteNuevo)
+		}).then(function successCallback(data) {
+			getClientes();
+			$("#modalNuevoCliente").modal('hide');
+			mostrarAlerta("Cliente agregado exitosamente","success");
+		},function errorCallback(e){
+			console.log(e);
+		});
+	}
+	
+	function getClientes(){
+		$http({
+		    method: 'GET', 
+		    url: url_principal+"clientes/listar"
+		}).then(function successCallback(data) {
+			$scope.clientes=data.data;
+		},function errorCallback(e){
+			console.log(e);
+		});
+	}
 	
 });
 
@@ -69,6 +129,7 @@ $("#guardarCambiosCliente").on('click', function() {
 	}).fail(function(error) {
 		console.log(error);
 	});
+	
 });
 
 $("#guardarCambiosCliente").on('click', function() {

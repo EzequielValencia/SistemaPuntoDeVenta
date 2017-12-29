@@ -4,57 +4,17 @@
 </head>
 <body ng-app="SistemaPuntoDeVenta" ng-controller="seccionClientes">
 	<nav th:replace="layout/layout :: nav"></nav>
-
-	<div class="container text-center" >
-		<h1 class="display-3">Lista de clientes</h1>
+	<div class="container ">
+		<br/>
+		<h1 class="display-3 text-center">Lista de clientes</h1>
 		<hr class="bg-danger" />
-		<p class="text-left">
-			<a class="btn btn-outline-success btn-sm "
-				th:href="@{/clientes/crear}">Crear nuevo cliente</a>
+		
+		<p>
+			<button class="mb-2 btn btn-outline-success btn-sm float-left" data-toggle="modal"
+				data-target="#modalNuevoCliente">Crear nuevo cliente</button>
 		</p>
-		<!--<table
-			class="table table-striped table-responsive table-bordered text-center">
-			<thead class="thead-inverse">
-				<tr>
-					<th>ID</th>
-					<th>Nombre</th>
-					<th>Apellido Paterno</th>
-					<th>Apellido Materno</th>
-					<th>Compañia</th>
-					<th>Correo</th>
-					<th>Fecha de creación</th>
-					<th>Editar</th>
-					<th>Eliminar</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="cliente:${clientes}">
-					<td th:text="${cliente.id}"></td>
-					<td th:text="${cliente.nombre}"></td>
-					<td th:text="${cliente.apellidoPaterno}"></td>
-
-					<td th:text="${cliente.apellidoMaterno}"></td>
-
-					<td th:text="${cliente.compania}"></td>
-
-					<td th:text="${cliente.correo}"></td>
-
-					<td th:text="${cliente.fechaCreacion}"></td>
-
-					<td>
-					
-						<button  class="btn btn-warning" th:attr="data-cliente=${cliente.id}">Editar</button>
-					</td>
-					<td>
-					
-						<button class="btn btn-danger" th:attr="data-cliente=${cliente.id}">Eliminar</button>
-					</td>
-
-				</tr>
-			</tbody>
-		</table>-->
-		<table
-			class="table table-striped table-responsive table-bordered text-center">
+		
+		<table class="table table-striped table-responsive table-bordered ">
 			<thead class="thead-inverse">
 				<tr>
 					<th>ID</th>
@@ -98,21 +58,20 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" > Editar los datos de: {{clienteEditar.nombre+' '+clienteEditar.apellidoPaterno+' '+clienteEditar.apellidoMaterno}}</h5>
+					<h5 class="modal-title">Editar los datos de:
+						{{clienteEditar.nombre+' '+clienteEditar.apellidoPaterno+'
+						'+clienteEditar.apellidoMaterno}}</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body">
+				<form class="modal-body">
 					<div class="form-group row">
-						<input type="hidden" name="id" id="id" ng-model="clienteEditar.id" /> 
-						<input type="hidden"
-							name="fechaCreacion" id="fechaCreacion" ng-model="clienteEditar.fechaCreacion"/> 
-							<label for="example-text-input" class="col-2 col-form-label">Nombre</label>
+						<label for="example-text-input" class="col-2 col-form-label">Nombre</label>
 						<div class="col-10">
 							<input class="form-control" type="text" name="nombreNuevo"
-								id="nombreNuevo" ng-model="clienteEditar.nombre" />
+								id="nombreNuevo" ng-model="clienteEditar.nombre" required="true" />
 
 						</div>
 					</div>
@@ -122,7 +81,7 @@
 						<div class="col-10">
 							<input class="form-control" type="text"
 								name="apellidoPaternoNuevo" id="apellidoPaternoNuevo"
-								ng-model="clienteEditar.apellidoPaterno" />
+								ng-model="clienteEditar.apellidoPaterno" required="true" />
 
 						</div>
 					</div>
@@ -131,8 +90,8 @@
 							Materno</label>
 						<div class="col-10">
 							<input class="form-control" type="text"
-								name="apellidoMaternoNuevo" id="apellidoMaternoNuevo" 
-								ng-model="clienteEditar.apellidoMaterno"/>
+								name="apellidoMaternoNuevo" id="apellidoMaternoNuevo"
+								ng-model="clienteEditar.apellidoMaterno" required="true" />
 
 						</div>
 					</div>
@@ -140,24 +99,88 @@
 						<label for="example-url-input" class="col-2 col-form-label">Compañia</label>
 						<div class="col-10">
 							<input class="form-control" name="companiaNuevo" type="text"
-								id="companiaNuevo" 
-								ng-model="clienteEditar.compania"/>
+								id="companiaNuevo" ng-model="clienteEditar.compania" />
 						</div>
 					</div>
 					<div class="form-group row">
 						<label for="example-tel-input" class="col-2 col-form-label">Correo</label>
 						<div class="col-10">
-							<input class="form-control" type="mail" name="correoNuevo"
-								id="correoNuevo" 
-								ng-model="clienteEditar.correo"/>
+							<input class="form-control" type="email" name="correoNuevo"
+								id="correoNuevo" ng-model="clienteEditar.correo" required="true" />
 						</div>
 					</div>
 					<hr />
 					<button type="submit" id="guardarCambiosCliente"
-						class="btn btn-success float-right" ng-click="actualizarDatosCliente()">Guardar Cambios</button>
+						class="btn btn-success float-right"
+						ng-click="actualizarDatosCliente()">Guardar Cambios</button>
 					<button type="reset" class="btn btn-secondary float-left">Borrar
 						Campos</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modalNuevoCliente" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Agregar Cliente</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
+				<form class="modal-body">
+					<div class="form-group row">
+						<label for="example-text-input" class="col-2 col-form-label">Nombre</label>
+						<div class="col-10">
+							<input class="form-control" type="text" name="nombreNuevo"
+								id="nombreNuevo" ng-model="clienteNuevo.nombre" required="true" />
+
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="example-search-input" class="col-2 col-form-label">Apellido
+							Paterno</label>
+						<div class="col-10">
+							<input class="form-control" type="text"
+								name="apellidoPaternoNuevo" id="apellidoPaternoNuevo"
+								ng-model="clienteNuevo.apellidoPaterno" required="true" />
+
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="example-email-input" class="col-2 col-form-label">Apellido
+							Materno</label>
+						<div class="col-10">
+							<input class="form-control" type="text"
+								name="apellidoMaternoNuevo" id="apellidoMaternoNuevo"
+								ng-model="clienteNuevo.apellidoMaterno" required="true" />
+
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="example-url-input" class="col-2 col-form-label">Compañia</label>
+						<div class="col-10">
+							<input class="form-control" name="companiaNuevo" type="text"
+								id="companiaNuevo" ng-model="clienteNuevo.compania" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="example-tel-input" class="col-2 col-form-label">Correo</label>
+						<div class="col-10">
+							<input class="form-control" type="email" name="correoNuevo"
+								id="correoNuevo" ng-model="clienteNuevo.correo" required="true" />
+						</div>
+					</div>
+					<hr />
+					<button type="submit" id="guardarCambiosCliente"
+						class="btn btn-success float-right" ng-click="agregarCliente()">Agregar
+						Cliente</button>
+					<button type="reset" class="btn btn-secondary float-left">Borrar
+						Campos</button>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -168,7 +191,9 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="tituloModalEliminar"></h5>
+					<h5 class="modal-title">Realmente quieres eliminar a
+						{{clienteEliminar.nombre+' '+clienteEliminar.apellidoPaterno+'
+						'+clienteEliminar.apellidoMaterno}}</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -176,10 +201,8 @@
 				</div>
 				<div class="modal-body">
 					<p>Recuerda que estos datos no podran ser recuperados.</p>
-					<input type="hidden" id="idClienteEliminar"
-						name="idClienteEliminar" />
 					<hr />
-					<button type="submit" id="eliminarCliente"
+					<button type="submit" ng-click="borrarClienteEnDB()"
 						class="btn btn-danger float-right">Eliminar</button>
 					<button type="reset" data-dismiss="modal"
 						class="btn btn-success float-left">Cancelar</button>
