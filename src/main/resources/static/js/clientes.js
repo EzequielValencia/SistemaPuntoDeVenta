@@ -1,7 +1,7 @@
 angular.module("SistemaPuntoDeVenta")
 .controller("seccionClientes",function($scope,$http){
 	$scope.clientes;
-
+	$scope.botonesPaginado=[];
 	getClientes();
 
 	$scope.eliminarCliente = function(idClienteEliminar){
@@ -77,14 +77,30 @@ angular.module("SistemaPuntoDeVenta")
 		});
 	}
 	
+	$scope.siguientePaginaClientes = function(pagina){
+		$http({
+		    method: 'GET', 
+		    url: pagina
+		}).then(function successCallback(data) {
+			
+			$scope.clientes=data.data.content;
+		},function errorCallback(e){
+			console.log(e);
+		});
+	};
+	
 	function getClientes(){
 		$http({
 		    method: 'GET', 
 		    url: url_principal+"clientes/listar"
 		}).then(function successCallback(data) {
-			console.log(data);
-			$scope.clientes=data.content;
-			
+			var cantidadBotonesPaginado = data.data.totalPages;
+			if(($scope.mostrarBotonesPaginado = cantidadBotonesPaginado>1)){
+				for(i=0;i<cantidadBotonesPaginado;i++){
+					$scope.botonesPaginado.push(url_principal+"clientes/listar?page="+i);
+				}
+			}
+			$scope.clientes=data.data.content;
 		},function errorCallback(e){
 			console.log(e);
 		});

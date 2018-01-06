@@ -32,9 +32,9 @@ public class ClienteController {
 	
 	@RequestMapping(value="/listar",method=RequestMethod.GET)
 	public @ResponseBody Page<Cliente> listarClientes(@RequestParam(name="page",defaultValue="0")int page) {
-		Pageable pageRequest = new PageRequest(page, 5);
-		
-		return clienteService.findAll(pageRequest);
+		Pageable pageRequest = new PageRequest(page, 10);
+		Page<Cliente> clientes = clienteService.findAll(pageRequest);
+		return clientes;
 	}
 		
 	@PostMapping(value="/crear")
