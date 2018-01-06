@@ -6,7 +6,7 @@
 	<nav th:replace="layout/layout :: nav"></nav>
 	<div class="container ">
 		<br/>
-		<h1 class="display-3 text-center">Lista de clientes</h1>
+		<h1 class="display-4 text-center">Lista de clientes</h1>
 		<hr class="bg-danger" />
 		
 		<p>
@@ -36,13 +36,13 @@
 					<td>{{cliente.apellidoMaterno}}</td>
 					<td>{{cliente.compania}}</td>
 					<td>{{cliente.correo}}</td>
-					<td>{{cliente.fechaCreacion | date:"MM/dd/yyyy"}}</td>
+					<td>{{cliente.fechaCreacion | date:"dd/MM/yyyy"}}</td>
 					<td>
-						<button class="btn btn-warning"
+						<button class="btn btn-warning" data-toggle="modal" data-target="#modalEdicionCliente"
 							ng-click="editarCliente(cliente.id)">Editar</button>
 					</td>
 					<td>
-						<button class="btn btn-danger"
+						<button class="btn btn-danger" data-toggle="modal" data-target="#modalELiminarCliente"
 							ng-click="eliminarCliente(cliente.id)">Eliminar</button>
 					</td>
 

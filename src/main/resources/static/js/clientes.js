@@ -12,7 +12,7 @@ angular.module("SistemaPuntoDeVenta")
 		}).then(function successCallback(data) {
 			
 			$scope.clienteEliminar = data.data;
-			$('#modalELiminarCliente').modal('show');
+			//$('#modalELiminarCliente').modal('show');
 			
 		},function errorCallback(e){
 			console.log(e);
@@ -28,7 +28,7 @@ angular.module("SistemaPuntoDeVenta")
 		}).then(function successCallback(data) {			
 			
 			$scope.clienteEditar = data.data;
-			$('#modalEdicionCliente').modal('show');
+			//$('#modalEdicionCliente').modal('show');
 			
 		},function errorCallback(e){
 			console.log(e);
@@ -82,7 +82,9 @@ angular.module("SistemaPuntoDeVenta")
 		    method: 'GET', 
 		    url: url_principal+"clientes/listar"
 		}).then(function successCallback(data) {
-			$scope.clientes=data.data;
+			console.log(data);
+			$scope.clientes=data.content;
+			
 		},function errorCallback(e){
 			console.log(e);
 		});
