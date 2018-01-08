@@ -6,7 +6,7 @@
 	<nav th:replace="layout/layout :: nav"></nav>
 	<div class="container ">
 		<br/>
-		<h1 class="display-4 text-center">Lista de clientes</h1>
+		<h1 class="display-5 text-center">Lista de clientes</h1>
 		<hr class="bg-danger" />
 		
 		<p>
@@ -50,22 +50,15 @@
 			</tbody>
 		</table>
 		 <ul class="pagination" ng-if="mostrarBotonesPaginado">
-		    <li class="page-item">
-		    	<a class="page-link" href="anterior">Previous</a>
-		    </li>
 			<li class="page-item" ng-repeat="botonPaginacion in botonesPaginado">
 				<a class="page-link" ng-click="siguientePaginaClientes(botonPaginacion)" style="cursor:pointer;">{{$index+1}}</a>
 			</li>
-		    <li class="page-item">
-		    	<a class="page-link" href="siguiente">Next</a>
-		    </li>
 		  </ul>
 	</div>
 
 
 
-	<div class="modal fade" id="modalEdicionCliente" tabindex="-1"
-		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="modalEdicionCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
