@@ -44,10 +44,25 @@ public class ClienteServiceImpl implements IClienteService {
 		clienteDao.delete(id);
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public Page<Cliente> findAll(Pageable page) {
 		// TODO Auto-generated method stub
 		return clienteDao.findAll(page);
 	}
-
+	
+	@Transactional(readOnly=true)
+	@Override
+	public List<Cliente> findByNombreAndApellidoPaternoAndApellidoMaterno(String nombre, String apellidoPaterno,
+			String apellidoMaterno) {
+		// 
+		return clienteDao.findByNombreAndApellidoPaternoAndApellidoMaterno(nombre, apellidoPaterno, apellidoMaterno);
+	}
+	
+	@Transactional(readOnly=true)
+	@Override
+	public Cliente findByCorreo(String correo) {
+		// TODO Auto-generated method stub
+		return clienteDao.findByCorreo(correo);
+	}
 }

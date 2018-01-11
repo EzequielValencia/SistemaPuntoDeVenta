@@ -19,6 +19,8 @@ import javax.persistence.Table;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="clientes")
 public class Cliente implements Serializable{
@@ -47,6 +49,7 @@ public class Cliente implements Serializable{
 	private Date fechaCreacion;
 	
 	@OneToMany(mappedBy="cliente",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@JsonIgnore
 	List<Factura> facturas;
 	
 	

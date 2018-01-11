@@ -18,4 +18,8 @@ public interface IClienteService {
 	public Cliente findOne(Long id);
 	
 	public void delete(Long id);
+	
+	public List<Cliente> findByNombreAndApellidoPaternoAndApellidoMaterno(String nombre,String apellidoPaterno,
+			String apellidoMaterno);
+	public Cliente findByCorreo(String correo);
 }

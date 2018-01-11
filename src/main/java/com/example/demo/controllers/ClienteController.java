@@ -1,5 +1,7 @@
 package com.example.demo.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -70,4 +72,24 @@ public class ClienteController {
 	public String detalleCliente() {
 		return "clientes/detalleCliente";
 	}
+	
+	@GetMapping(value="/clientes/{nombre}/{apellidoPaterno}/{apellidoMaterno}")
+	public @ResponseBody List<Cliente> getClienteByNombreApellidoPaternoApellidoMaterno(
+									@PathVariable(value="nombre") String nombre,
+									@PathVariable(value="apellidoPaterno") String apellidoPaterno,
+									@PathVariable(value="apellidoMaterno") String apellidoMaterno) {
+		List<Cliente> clientes = clienteService.findByNombreAndApellidoPaternoAndApellidoMaterno(nombre,
+					apellidoPaterno, apellidoMaterno);
+		return clientes;
+	}
+	
+	@GetMapping(value="/cliente")
+	public @ResponseBody Cliente getClienteByCorreo(@RequestParam(value="correo") String correo) {
+		Cliente cliente;
+		System.out.println(correo);
+		cliente = clienteService.findByCorreo(correo);
+		return cliente;
+	}
+	
+	
 }
