@@ -54,6 +54,18 @@ public class Cliente implements Serializable{
 		facturas = new ArrayList<Factura>();
 	}
 	
+	public List<Factura> getFacturas() {
+		return facturas;
+	}
+
+	public void setFacturas(List<Factura> facturas) {
+		this.facturas = facturas;
+	}
+
+	public void addFactura(Factura factura) {
+		this.facturas.add(factura);
+	}
+	
 	@PrePersist
 	public void fijarFechaAntesDeGuardar() {
 		fechaCreacion = new Date();

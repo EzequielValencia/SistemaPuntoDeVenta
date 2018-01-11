@@ -59,4 +59,15 @@ public class ClienteController {
 		clienteService.delete(id);
 		return true;
 	}
+	
+	@GetMapping(value="/detalleCliente/{id}/facturas")
+	public @ResponseBody Cliente detalleCliente(@PathVariable(value="id") Long id) {
+		Cliente cliente = clienteService.findOne(id);
+		return cliente;
+	}
+	
+	@GetMapping(value="/detalleCliente/{id}")
+	public String detalleCliente() {
+		return "clientes/detalleCliente";
+	}
 }

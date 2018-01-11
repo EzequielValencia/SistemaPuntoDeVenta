@@ -20,6 +20,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="facturas")
 public class Factura implements Serializable {
@@ -35,6 +37,7 @@ public class Factura implements Serializable {
 	private Date fechaRealizacion;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
+	@JsonIgnore
 	private Cliente cliente;
 	
 	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
@@ -46,6 +49,16 @@ public class Factura implements Serializable {
 		itemsFactura = new ArrayList<ItemFactura>();
 	}
 	
+	
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
 	
 	@PrePersist
 	public void prePersist(){
@@ -87,17 +100,6 @@ public class Factura implements Serializable {
 	}
 
 
-
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
 	
 	public void addItemFactura(ItemFactura item) {
 		itemsFactura.add(item);
@@ -120,6 +122,14 @@ public class Factura implements Serializable {
 		}
 		return total;
 	}
+	
+	
+	@Override
+	public String toString() {
+		return "Factura [id=" + id + ", observacion=" + observacion + ", fechaRealizacion=" + fechaRealizacion + "]";
+	}
+
+
 	private static final long serialVersionUID = 1L;
 
 }

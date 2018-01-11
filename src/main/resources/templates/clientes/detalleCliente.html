@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="layout/layout :: head">
+	
+	</head>
+<body ng-app="SistemaPuntoDeVenta" ng-controller="seccionFacturasCliente">
+	<nav th:replace="layout/layout :: nav"></nav>
+	
+	<div class="container ">
+		<h1 class="py-1 display-5 text-center">{{cliente.nombre+' '+cliente.apellidoPaterno+' '+cliente.apellidoMaterno}}</h1>
+		<hr class="bg-danger" />
+		
+		<p>
+			<button class="mb-2 btn btn-outline-success btn-sm float-left" data-toggle="modal"
+				data-target="#modalNuevoCliente">Nueva Factura</button>
+		</p>
+		<div class="alert alert-info my-5" ng-if="cliente.facturas.length==0">
+			<p>
+				No hay facturas para este cliente.
+			</p>
+		</div>
+		<table class="table table-striped table-bordered " ng-if="cliente.facturas.lenght>0">
+			<thead class="thead-inverse">
+				<tr>
+					<th class="text-center">Folio</th>
+					<th class="text-center">Descripcion</th>
+					<th class="text-center">Fecha</th>
+					<th class="text-center">Total</th>
+				</tr>
+			</thead>
+			<tbody >
+				<tr ng-repeat="factura in cliente.facturas">
+					<td class="text-center">
+						<a class="btn btn-primary text-white" th:ref="#/"  role="button">
+						{{factura.id}}
+						</a>
+					</td>
+					<td>{{factura.observacion}}</td>
+					<td class="text-center">{{factura.fechaRealizacion}}</td>
+					<td class="text-center">{{factura.total}}</td>
+					
+
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	
+	<footer th:replace="layout/layout :: footer">
+	</footer>
+	<script type="text/javascript" th:src="@{/js/cliente/facturasCliente.js}"></script>
+</body>
+</html>

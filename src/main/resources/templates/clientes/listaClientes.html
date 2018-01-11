@@ -5,7 +5,6 @@
 <body ng-app="SistemaPuntoDeVenta" ng-controller="seccionClientes">
 	<nav th:replace="layout/layout :: nav"></nav>
 	<div class="container ">
-		<br/>
 		<h1 class="display-5 text-center">Lista de clientes</h1>
 		<hr class="bg-danger" />
 		
@@ -30,7 +29,11 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="cliente in clientes">
-					<td>{{cliente.id}}</td>
+					<td>
+						<a class="btn btn-primary" th:href="@{/clientes/detalleCliente/{{cliente.id}}}" role="button">
+						{{cliente.id}}
+						</a>
+					</td>
 					<td>{{cliente.nombre}}</td>
 					<td>{{cliente.apellidoPaterno}}</td>
 					<td>{{cliente.apellidoMaterno}}</td>
@@ -216,6 +219,6 @@
 	</div>
 
 	<footer th:replace="layout/layout :: footer"></footer>
-	<script type="text/javascript" th:src="@{/js/clientes.js}"></script>
+	<script type="text/javascript" th:src="@{/js/cliente/clientes.js}"></script>
 </body>
 </html>
