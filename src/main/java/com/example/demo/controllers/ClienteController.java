@@ -73,22 +73,19 @@ public class ClienteController {
 		return "clientes/detalleCliente";
 	}
 	
-	@GetMapping(value="/clientes/{nombre}/{apellidoPaterno}/{apellidoMaterno}")
+	@GetMapping(value="/clientes")
 	public @ResponseBody List<Cliente> getClienteByNombreApellidoPaternoApellidoMaterno(
-									@PathVariable(value="nombre") String nombre,
-									@PathVariable(value="apellidoPaterno") String apellidoPaterno,
-									@PathVariable(value="apellidoMaterno") String apellidoMaterno) {
-		List<Cliente> clientes = clienteService.findByNombreAndApellidoPaternoAndApellidoMaterno(nombre,
-					apellidoPaterno, apellidoMaterno);
-		return clientes;
+									@RequestParam(value="nombre") String nombre,
+									@RequestParam(value="apellidoPaterno") String apellidoPaterno,
+									@RequestParam(value="apellidoMaterno") String apellidoMaterno) {
+		
+		return clienteService.findByNombreAndApellidoPaternoAndApellidoMaterno(nombre,apellidoPaterno, apellidoMaterno);
 	}
 	
 	@GetMapping(value="/cliente")
 	public @ResponseBody Cliente getClienteByCorreo(@RequestParam(value="correo") String correo) {
-		Cliente cliente;
-		System.out.println(correo);
-		cliente = clienteService.findByCorreo(correo);
-		return cliente;
+
+		return clienteService.findByCorreo(correo);
 	}
 	
 	

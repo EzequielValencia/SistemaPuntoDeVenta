@@ -1,3 +1,11 @@
+INSERT INTO productos (nombre, precio, existencia) VALUES('Panasonic Pantalla LCD', 259990, 5);
+INSERT INTO productos (nombre, precio, existencia) VALUES('Sony Camara digital DSC-W320B', 123490, 30);
+INSERT INTO productos (nombre, precio, existencia) VALUES('Apple iPod shuffle', 1499990, 50);
+INSERT INTO productos (nombre, precio, existencia) VALUES('Sony Notebook Z110', 37990, 15);
+INSERT INTO productos (nombre, precio, existencia) VALUES('Hewlett Packard Multifuncional F2280', 69990, 10);
+INSERT INTO productos (nombre, precio, existencia) VALUES('Bianchi Bicicleta Aro 26', 69990, 5);
+INSERT INTO productos (nombre, precio, existencia) VALUES('Mica Comoda 5 Cajones', 299990, 3);
+
 INSERT INTO clientes (nombre, apellido_paterno,apellido_materno, correo, fecha_creacion) VALUES('Linus', 'Torvalds','', 'linus.torvalds@gmail.com', '2017-08-03');
 INSERT INTO clientes (nombre, apellido_paterno,apellido_materno, correo, fecha_creacion) VALUES('Jane', 'Doe','', 'jane.doe@gmail.com', '2017-08-04');
 INSERT INTO clientes (nombre, apellido_paterno,apellido_materno, correo, fecha_creacion) VALUES('Rasmus', 'Lerdorf','', 'rasmus.lerdorf@gmail.com', '2017-08-05');
@@ -22,8 +30,6 @@ INSERT INTO clientes (nombre, apellido_paterno,apellido_materno, correo, fecha_c
 INSERT INTO clientes (nombre, apellido_paterno,apellido_materno, correo, fecha_creacion) VALUES('John', 'Stiles','', 'john.stiles@gmail.com', '2017-08-24');
 INSERT INTO clientes (nombre, apellido_paterno,apellido_materno, correo, fecha_creacion) VALUES('Richard', 'Roe','', 'stiles.roe@gmail.com', '2017-08-25');
 
-
-
-
 INSERT INTO facturas (fecha_realizacion,observacion,cliente_id) VALUES(NOW(),'Equipo de computo',1);
 INSERT INTO facturas (fecha_realizacion,observacion,cliente_id) VALUES(NOW(),'Bicicletas',1);
+

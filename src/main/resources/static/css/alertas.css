@@ -1,6 +1,7 @@
 #alerta {
 	visibility: hidden;
 	min-width: 250px;
+	max-width:250px;
 	margin-left: -125px;
 	color: #fff;
 	text-align: center;
@@ -8,9 +9,10 @@
 	padding: 16px;
 	position: fixed;
 	z-index: 1;
-	left: 90%;
+	left: 50%;
 	top: 80px;
 	font-size: 17px;
+	
 }
 
 #alerta.show.primary {
@@ -18,7 +20,7 @@
 	background-color: #025AA5;
 	-webkit-animation: fadein 1s, fadeout 2s 2.5s;
 	animation: fadein 1s, fadeout 2s 2.5s;
-	opacity: 0.8;
+	
 }
 
 #alerta.show.secondary {
@@ -28,7 +30,7 @@
 	border: 1px solid #ccc;
 	color: #292b2c;
 	background-color: #eeeeec;
-	opacity: 0.8;
+	
 }
 
 #alerta.show.success {
@@ -36,7 +38,7 @@
 	background-color: #449D44;
 	-webkit-animation: fadein 1s, fadeout 2s 2.5s;
 	animation: fadein 1s, fadeout 2s 2.5s;
-	opacity: 0.8;
+	
 }
 
 #alerta.show.info {
@@ -44,7 +46,7 @@
 	background-color: #5bc0de;
 	-webkit-animation: fadein 1s, fadeout 2s 2.5s;
 	animation: fadein 1s, fadeout 2s 2.5s;
-	opacity: 0.8;
+	
 }
 
 #alerta.show.warning {
@@ -52,7 +54,7 @@
 	background-color: #f0ad4e;
 	-webkit-animation: fadein 1s, fadeout 2s 2.5s;
 	animation: fadein 1s, fadeout 2s 2.5s;
-	opacity: 0.8;
+	
 }
 
 #alerta.show.danger {
@@ -60,26 +62,26 @@
 	background-color: #C9302C;
 	-webkit-animation: fadein 1s, fadeout 2s 2.5s;
 	animation: fadein 1s, fadeout 2s 2.5s;
-	opacity: 0.8;
+	
 }
 
 
 @-webkit-keyframes fadein {
-    from {top: 0; opacity: 0;}
-    to {top: 80px; opacity: 1;}
+    from {top: 0; }
+    to {top: 80px;}
 }
 
 @keyframes fadein {
-    from {top: 0; opacity: 0;}
-    to {top: 80px; opacity: 1;}
+    from {top: 0;}
+    to {top: 80px;}
 }
 
 @-webkit-keyframes fadeout {
-    from {top: 80px; opacity: 1;}
-    to {top: 0; opacity: 0;}
+    from {top: 80px;}
+    to {top: 0;}
 }
 
 @keyframes fadeout {
-    from {top: 80px; opacity: 1;}
-    to {top: 0; opacity: 0;}
+    from {top: 80px;}
+    to {top: 0;}
 }

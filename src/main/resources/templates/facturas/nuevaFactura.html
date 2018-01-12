@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="layout/layout :: head">
+		 
+	</head>
+<body ng-app="SistemaPuntoDeVenta" ng-controller="facturasController">
+	<link rel="stylesheet"	th:href="@{/css/nuevaFactura.css}" />
+	<nav th:replace="layout/layout :: nav"></nav>
+	
+	<div class="container">
+		<h1 class="py-1 display-5 text-center">Nueva factura para {{clienteAsociado.nombre+' '+clienteAsociado.apellidoPaterno+' '+clienteAsociado.apellidoMaterno}}</h1>
+		<hr class="bg-danger" />
+		
+		<form>
+			<div class="form-group">
+					<input style="text-align: right;" class="form-control left" 
+					ng-model="codigoProducto" ng-keyup="verificaTeclaPrecionada($event)" 
+					placeholder="Ingresa el codigo del producto" autofocus="autofocus"/>
+			</div>
+			<div class="form-group">
+					<button type="button" class="btn btn-success btn-block" ng-click="buscarProducto()">Buscar</button>
+			</div>
+		</form>
+		<div class="row">
+			<div class="col-xs-12 col-sm-8 text-right">
+				<h1>Total:</h1>
+			</div>
+			<div class="col-xs-12 col-sm-4 text-right">
+				<h1>{{total | currency:"$"}}</h1>
+			</div>
+		</div>
+		<div class="containerTable">
+		<table class="table table-striped table-bordered table-fixed display">
+			<thead class="thead-inverse">
+				<tr>
+					<th class="text-center">Codigo</th>
+					<th class="text-center">Nombre</th>
+					<th class="text-center">Cantidad</th>
+					<th class="text-center">Costo</th>
+					<th class="text-center">Quitar</th>
+				</tr>
+			</thead>
+			<tbody >
+				<tr ng-repeat="item in facturaNueva.itemsFactura">
+					<td class="text-center">{{item.producto.id}}</td>
+					<td class="text-center">{{item.producto.nombre}}</td>
+					<td class="text-center"><input type="number" ng-model="item.cantidad" ng-click="calculaTotal()"/></td>
+					<td class="text-center">{{item.cantidad * item.producto.precio | currency:"$"}}</td>
+					<th class="text-center"></th>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+	</div>
+	
+	<footer th:replace="layout/layout :: footer"></footer>
+	
+	<script type="text/javascript" src="https://code.angularjs.org/1.6.6/angular-route.min.js"></script>
+	<script type="text/javascript" th:src="@{/js/factura/nuevaFactura.js}"></script>
+</body>
+</html>
