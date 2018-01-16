@@ -65,6 +65,7 @@ public class ClienteController {
 	@GetMapping(value="/detalleCliente/{id}/facturas")
 	public @ResponseBody Cliente detalleCliente(@PathVariable(value="id") Long id) {
 		Cliente cliente = clienteService.findOne(id);
+		System.out.println(cliente);
 		return cliente;
 	}
 	

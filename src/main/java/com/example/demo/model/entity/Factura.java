@@ -50,6 +50,8 @@ public class Factura implements Serializable {
 	private List<ItemFactura> itemsFactura;
 
 
+	private Double total;
+	
 	public Factura() {
 		itemsFactura = new ArrayList<ItemFactura>();
 	}
@@ -120,21 +122,24 @@ public class Factura implements Serializable {
 	}
 
 
+
+
 	public Double getTotal() {
-		Double total =0.0;
-		for (ItemFactura item:itemsFactura) {
-			total+=item.calcularImporte();
-		}
 		return total;
 	}
-	
-	
-	@Override
-	public String toString() {
-		return "Factura [id=" + id + ", observacion=" + observacion + ", fechaRealizacion=" + fechaRealizacion + "]";
+
+
+	public void setTotal(Double total) {
+		this.total = total;
 	}
 
 
+	@Override
+	public String toString() {
+		return "Factura [id=" + id + ", observacion=" + observacion + ", fechaRealizacion=" + fechaRealizacion
+				+ ", cliente=" + cliente.toString() + ", itemsFactura=" + itemsFactura.size() + "]";
+	}
+	
 	
 
 }

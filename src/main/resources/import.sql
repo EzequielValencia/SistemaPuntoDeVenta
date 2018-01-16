@@ -30,6 +30,4 @@ INSERT INTO clientes (nombre, apellido_paterno,apellido_materno, correo, fecha_c
 INSERT INTO clientes (nombre, apellido_paterno,apellido_materno, correo, fecha_creacion) VALUES('John', 'Stiles','', 'john.stiles@gmail.com', '2017-08-24');
 INSERT INTO clientes (nombre, apellido_paterno,apellido_materno, correo, fecha_creacion) VALUES('Richard', 'Roe','', 'stiles.roe@gmail.com', '2017-08-25');
 
-INSERT INTO facturas (fecha_realizacion,observacion,cliente_id) VALUES(NOW(),'Equipo de computo',1);
-INSERT INTO facturas (fecha_realizacion,observacion,cliente_id) VALUES(NOW(),'Bicicletas',1);
 

@@ -63,10 +63,40 @@ angular.module('SistemaPuntoDeVenta')
 		$scope.total=0;
 		var cantidadProductosEnFactura=$scope.facturaNueva.itemsFactura.length;
 		for(var i=0;i<cantidadProductosEnFactura;i++){
+				console.log($scope.facturaNueva.itemsFactura[i]);
 				$scope.total += $scope.facturaNueva.itemsFactura[i].cantidad * 
 				$scope.facturaNueva.itemsFactura[i].producto.precio;	
 			}
 		}
+	
+	$scope.finalizarVenta = function(){
+		$scope.facturaNueva.total = $scope.total; 
+		$http({
+			method:"POST",
+			url:url_principal+"/facturas/guardarFactura/"+$scope.clienteAsociado.id,
+			data:JSON.stringify($scope.facturaNueva)
+		}).then(function succesCallback (data){
+			if(data.data){
+				mostrarAlerta("Factura creada con exito" ,"success");
+				getFacturaNueva();
+				$scope.calculaTotal();
+			}
+		},function errorCallback (e){
+			mostrarAlerta("Hubo problemas al crear la factura" ,"danger");
+		});
+		
+	}
+	
+	$scope.quitarProducto = function(idProducto){
+		var cantidadProductosEnFactura=$scope.facturaNueva.itemsFactura.length;
+		for(var i=0;i<cantidadProductosEnFactura;i++){
+				if($scope.facturaNueva.itemsFactura[i].producto.id==idProducto){
+					$scope.facturaNueva.itemsFactura.splice(i,1);
+					break;
+				}
+			}
+		$scope.calculaTotal();
+	}
 	
 	
 	
@@ -82,9 +112,8 @@ angular.module('SistemaPuntoDeVenta')
 	}
 	
 	function getClienteAsociado(){
-	      var prmstr = window.location.search.substr(1);
-	      var idCliente = prmstr.substring(prmstr.indexOf('=')+1);
-	      //console.log(prmstr.substring(prmstr.indexOf('=')+1));
+      var prmstr = window.location.search.substr(1);
+      var idCliente = prmstr.substring(prmstr.indexOf('=')+1);
 	      
 		$http({
 		  method:"GET",
