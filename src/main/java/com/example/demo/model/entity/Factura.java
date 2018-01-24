@@ -49,8 +49,8 @@ public class Factura implements Serializable {
 	@JoinColumn(name="factura_id")
 	private List<ItemFactura> itemsFactura;
 
-
 	private Double total;
+
 	
 	public Factura() {
 		itemsFactura = new ArrayList<ItemFactura>();

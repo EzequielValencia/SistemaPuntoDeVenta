@@ -31,6 +31,7 @@ public class ProductosController {
 
 	@GetMapping(value="/listaProductos")
 	public @ResponseBody List<Producto> listaProductos(){
+
 		List<Producto> productos = (List<Producto>) productosService.findAll();
 		return productos;
 	}
@@ -40,8 +41,7 @@ public class ProductosController {
 		productosService.save(producto);
 		return new Boolean(true);
 	}
-	
-	
+
 	@GetMapping(value="/producto/{id}")
 	public @ResponseBody Producto getProducto(@PathVariable(value="id") Long id){
 		Producto producto = productosService.findOne(id);
