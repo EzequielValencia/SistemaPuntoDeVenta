@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.demo.model.dao.IFacturasDao;
 import com.example.demo.model.entity.Cliente;
+import com.example.demo.model.entity.Factura;
 import com.example.demo.model.service.IClienteService;
 
 @Controller
@@ -24,7 +26,7 @@ import com.example.demo.model.service.IClienteService;
 public class ClienteController {
 
 	private @Autowired  IClienteService clienteService;
-	
+	private @Autowired IFacturasDao facturasDao;
 	@RequestMapping(value="",method=RequestMethod.GET)
 	public String listarClientes() {
 		return "clientes/listaClientes";
@@ -52,6 +54,8 @@ public class ClienteController {
 	
 	@PostMapping(value="/guardarCambiosCliente")
 	public String guardarCambios(@RequestBody Cliente cliente) {
+		List<Factura> facturas = facturasDao.findByClienteId(cliente.getId());
+		cliente.setFacturas(facturas);
 		clienteService.save(cliente);
 		return "redirect:listar";
 	}
