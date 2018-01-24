@@ -10,6 +10,8 @@
 	th:href="@{/bower_components/tether/dist/css/tether.css}"></link>
 <link rel="stylesheet"
 	th:href="@{/css/alertas.css}"></link>
+<link rel="stylesheet"
+	th:href="@{/bower_components/fontawesome-free-5.0.4/web-fonts-with-css/css/fontawesome-all.min.css}"></link>
 </head>
 <body>
 
@@ -26,11 +28,17 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item ">
-					<a class="nav-link" th:href="@{/productos}">Productos</a>
+					<a class="nav-link" th:href="@{/productos}">Productos <i class="fas fa-table"></i></a>
 				</li>
 				<li class="nav-item">
-					<a	class="nav-link " th:href="@{/clientes}" aria-haspopup="true" aria-expanded="false"> Clientes </a>
+					<a	class="nav-link " th:href="@{/clientes}" aria-haspopup="true" aria-expanded="false"> Clientes <i class="fas fa-user-plus"></i> </a>
 				</li>
+				<li class="nav-item">
+					<a	class="nav-link " th:href="@{/clientes}" aria-haspopup="true" aria-expanded="false"> Ventas <i class="fas fa-shopping-basket"></i> </a>
+				</li>
+				<li class="nav-item">
+					<a	class="nav-link " th:href="@{/clientes}" aria-haspopup="true" aria-expanded="false"> Facturas <i class="fas fa-file-alt"></i> </a>
+				</li>				
 			</ul>
 		</div>
 		<div id="alerta"></div>

@@ -5,13 +5,17 @@ angular.module("SistemaPuntoDeVenta")
 	getCliente();
 	console.log(window.location.href+'/facturas');
 	
+	$scope.verDetalleFactura = function(idFactura,idCliente){
+		window.location.href = url_principal+'facturas/detallesFactura?idFactura='+idFactura;
+	}
+	
+	
 	function getCliente(){
 		$http({
 			method:'GET',
 			url:window.location.href+'/facturas'
 		}).then(function succesCallbak(data){
 			$scope.cliente = data.data;
-			console.log($scope.cliente);
 		},function errorCallback(e){
 			console.log(e);
 		});

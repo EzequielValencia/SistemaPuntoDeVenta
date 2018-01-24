@@ -4,6 +4,7 @@ controller('seccionProductos',function($scope,$http){
 	$scope.productoNuevo={};
 	$scope.productoEliminar={};
 	$scope.productoEditar={};
+	
 	getListaProductos();
 	
 	$scope.guardarProducto=function(){
