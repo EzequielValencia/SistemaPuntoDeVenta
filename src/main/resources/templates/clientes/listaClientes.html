@@ -12,46 +12,47 @@
 			<button class="mb-2 btn btn-outline-success btn-sm float-left" data-toggle="modal"
 				data-target="#modalNuevoCliente">Crear nuevo cliente</button>
 		</p>
-		
-		<table class="table table-striped table-responsive table-bordered ">
-			<thead class="thead-inverse">
-				<tr>
-					<th>ID</th>
-					<th>Nombre</th>
-					<th>Apellido Paterno</th>
-					<th>Apellido Materno</th>
-					<th>Compañia</th>
-					<th>Correo</th>
-					<th>Fecha de creación</th>
-					<th>Editar</th>
-					<th>Eliminar</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="cliente in clientes">
-					<td>
-						<a class="btn btn-primary" th:href="@{/clientes/detalleCliente/{{cliente.id}}}" role="button">
-						{{cliente.id}}
-						</a>
-					</td>
-					<td>{{cliente.nombre}}</td>
-					<td>{{cliente.apellidoPaterno}}</td>
-					<td>{{cliente.apellidoMaterno}}</td>
-					<td>{{cliente.compania}}</td>
-					<td>{{cliente.correo}}</td>
-					<td>{{cliente.fechaCreacion | date:"dd/MM/yyyy"}}</td>
-					<td>
-						<button class="btn btn-warning" data-toggle="modal" data-target="#modalEdicionCliente"
-							ng-click="editarCliente(cliente.id)">Editar</button>
-					</td>
-					<td>
-						<button class="btn btn-danger" data-toggle="modal" data-target="#modalELiminarCliente"
-							ng-click="eliminarCliente(cliente.id)">Eliminar</button>
-					</td>
-
-				</tr>
-			</tbody>
-		</table>
+		<div class="table-responsive">	
+			<table class="table table-striped table-bordered ">
+				<thead class="thead-inverse">
+					<tr>
+						<th>ID</th>
+						<th>Nombre</th>
+						<th>Apellido Paterno</th>
+						<th>Apellido Materno</th>
+						<th>Compañia</th>
+						<th>Correo</th>
+						<th>Fecha de creación</th>
+						<th>Editar</th>
+						<th>Eliminar</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="cliente in clientes">
+						<td>
+							<a class="btn btn-primary" th:href="@{/clientes/detalleCliente/{{cliente.id}}}" role="button">
+							{{cliente.id}}
+							</a>
+						</td>
+						<td>{{cliente.nombre}}</td>
+						<td>{{cliente.apellidoPaterno}}</td>
+						<td>{{cliente.apellidoMaterno}}</td>
+						<td>{{cliente.compania}}</td>
+						<td>{{cliente.correo}}</td>
+						<td>{{cliente.fechaCreacion | date:"dd/MM/yyyy"}}</td>
+						<td>
+							<button class="btn btn-warning" data-toggle="modal" data-target="#modalEdicionCliente"
+								ng-click="editarCliente(cliente.id)">Editar</button>
+						</td>
+						<td>
+							<button class="btn btn-danger" data-toggle="modal" data-target="#modalELiminarCliente"
+								ng-click="eliminarCliente(cliente.id)">Eliminar</button>
+						</td>
+	
+					</tr>
+				</tbody>
+			</table>
+		</div>
 		 <ul class="pagination" ng-if="mostrarBotonesPaginado">
 			<li class="page-item" ng-repeat="botonPaginacion in botonesPaginado">
 				<a class="page-link" ng-click="siguientePaginaClientes(botonPaginacion)" style="cursor:pointer;">{{$index+1}}</a>

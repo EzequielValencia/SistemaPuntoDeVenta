@@ -1,7 +1,5 @@
 package com.example.demo.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +13,6 @@ import com.example.demo.model.dao.IClienteDao;
 import com.example.demo.model.dao.IFacturasDao;
 import com.example.demo.model.entity.Cliente;
 import com.example.demo.model.entity.Factura;
-import com.example.demo.model.entity.ItemFactura;
 
 @Controller
 @RequestMapping(value="facturas")
@@ -44,12 +41,7 @@ public class FacturasController {
 	@PostMapping(value="/guardarFactura/{cliente}")
 	public @ResponseBody Boolean guardarFactura(@RequestBody Factura factura,@PathVariable(value="cliente") Long cliente) {
 		Cliente clienteAsociado = clienteService.findOne(cliente);
-		List<ItemFactura> items = factura.getItemsFactura();
-		for(ItemFactura item:items) {
-			System.out.println(item);
-		}
 		factura.setCliente(clienteAsociado);
-		System.out.println(factura.getItemsFactura().get(0));
 		facturasServices.save(factura);
 		Boolean seGuardo = new Boolean(true);
 		return seGuardo;

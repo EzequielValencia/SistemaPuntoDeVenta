@@ -47,6 +47,7 @@ public class Cliente implements Serializable{
 	private Date fechaCreacion;
 	
 	@OneToMany(mappedBy="cliente",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	
 	List<Factura> facturas;
 	
 	

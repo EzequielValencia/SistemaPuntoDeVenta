@@ -79,7 +79,7 @@ angular.module('SistemaPuntoDeVenta')
 			if(data.data){
 				mostrarAlerta("Factura creada con exito" ,"success");
 				getFacturaNueva();
-				$scope.calculaTotal();
+				$scope.total=0;
 			}
 		},function errorCallback (e){
 			mostrarAlerta("Hubo problemas al crear la factura" ,"danger");

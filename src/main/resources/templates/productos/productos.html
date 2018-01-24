@@ -11,51 +11,116 @@
 			<button class="mb-2 btn btn-outline-success btn-sm float-left" data-toggle="modal"
 				data-target="#modalNuevoProducto">Crear nuevo producto</button>
 		</p>
-		
-		<table class="table table-striped table-responsive table-bordered ">
+		<div class="table-responsive">
+		<table class="table table-striped table-bordered ">
 			<thead class="thead-inverse">
 				<tr>
 					<th>ID</th>
 					<th>Nombre</th>
-					<th>Marca</th>
-					<th>Modelo</th>
-					<th>Codigo</th>
 					<th>Descripción</th>
-					<th></th>
-					<th></th>
-					<th></th>
+					<th>Existencia</th>
+					<th>Precio</th>
+					<th>Imagen</th>
+					<th>Editar</th>
+					<th>Eliminar</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="cliente in clientes">
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
+				<tr ng-repeat="producto in productos">
+					<td >{{producto.id}}</td>
+					<td >{{producto.nombre}}</td>
+					<td >{{producto.descripcion}}</td>
+					<td >{{producto.existencia}}</td>
+					<td >{{producto.precio}}</td>
+					<td ></td>
 					<td>
-						<button class="btn btn-warning" data-toggle="modal" data-target="#modalEdicionCliente"
-							ng-click="editarCliente(cliente.id)">Editar
+						<button class="btn btn-warning" data-toggle="modal" data-target="#modalEditarProducto"
+							ng-click="getProducto(producto.id,1)">Editar
 						</button>
 					</td>
 					<td>
-						<button class="btn btn-danger" data-toggle="modal" data-target="#modalELiminarCliente"
-							ng-click="eliminarCliente(cliente.id)">Eliminar</button>
+						<button class="btn btn-danger" data-toggle="modal" data-target="#modalEliminarProducto"
+							ng-click="getProducto(producto.id,2)">Eliminar</button>
 					</td>
 
 				</tr>
 			</tbody>
 		</table>
-		 <ul class="pagination" ng-if="mostrarBotonesPaginado">
+		</div>
+<!-- 		 <ul class="pagination" ng-if="mostrarBotonesPaginado">
 			<li class="page-item" ng-repeat="botonPaginacion in botonesPaginado">
 				<a class="page-link" ng-click="siguientePaginaClientes(botonPaginacion)" style="cursor:pointer;">{{$index+1}}</a>
 			</li>
 		  </ul>
+-->
 	</div>
 	
 	<div class="modal fade" tabindex="-1" id="modalNuevoProducto" role="">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Nuevo producto</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form class="modal-body">
+					<div class="form-group row">
+						<label for="example-text-input" class="col-2 col-form-label">Nombre</label>
+						<div class="col-10">
+							<input class="form-control" type="text" name="nombreNuevo"
+								id="nombreNuevo" ng-model="productoNuevo.nombre" required="true" />
+
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="example-search-input" class="col-2 col-form-label">Precio</label>
+						<div class="col-10">
+							<input class="form-control" type="text"
+								name="apellidoPaternoNuevo" id="apellidoPaternoNuevo"
+								ng-model="productoNuevo.precio" required="true" />
+
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="example-email-input" class="col-2 col-form-label">Existencia</label>
+						<div class="col-10">
+							<input class="form-control" type="number"
+								name="apellidoMaternoNuevo" id="apellidoMaternoNuevo"
+								ng-model="productoNuevo.existencia" required="true" />
+
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="example-url-input" class="col-2 col-form-label">Descripcion</label>
+						<div class="col-10">
+							<input class="form-control" name="companiaNuevo" type="text"
+								id="companiaNuevo" ng-model="productoNuevo.descripcion" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="example-tel-input" class="col-2 col-form-label">Correo</label>
+						<div class="col-10">
+							<input class="form-control" type="file" name="correoNuevo"
+								id="correoNuevo" ng-model="productoNuevo.imagen"  />
+						</div>
+						<div class="col-12" ng-if="productoNuevo.imagen">
+							<img src="productoNuevo.imagen"/>
+						</div>
+					</div>
+					<hr />
+					<button type="submit" id="guardarCambiosCliente"
+						class="btn btn-success float-right"
+						ng-click="guardarProducto(productoNuevo,'#modalNuevoProducto')">Guardar</button>
+					<button type="reset" class="btn btn-secondary float-left" data-dismiss="modal">Borrar
+						Campos</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" tabindex="-1" id="modalEditarProducto" role="">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -86,36 +151,66 @@
 					<div class="form-group row">
 						<label for="example-email-input" class="col-2 col-form-label">Existencia</label>
 						<div class="col-10">
-							<input class="form-control" type="text"
+							<input class="form-control" type="number"
 								name="apellidoMaternoNuevo" id="apellidoMaternoNuevo"
 								ng-model="productoEditar.existencia" required="true" />
 
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="example-url-input" class="col-2 col-form-label">Compañia</label>
+						<label for="example-url-input" class="col-2 col-form-label">Descripcion</label>
 						<div class="col-10">
 							<input class="form-control" name="companiaNuevo" type="text"
-								id="companiaNuevo" ng-model="clienteEditar.compania" />
+								id="companiaNuevo" ng-model="productoEditar.descripcion" />
 						</div>
 					</div>
 					<div class="form-group row">
 						<label for="example-tel-input" class="col-2 col-form-label">Correo</label>
 						<div class="col-10">
-							<input class="form-control" type="email" name="correoNuevo"
-								id="correoNuevo" ng-model="clienteEditar.correo" required="true" />
+							<input class="form-control" type="file" name="correoNuevo"
+								id="correoNuevo" ng-model="productoEditar.imagen"  />
+						</div>
+						<div class="col-12" ng-if="productoEditar.imagen">
+							<img src="productoEditar.imagen"/>
 						</div>
 					</div>
 					<hr />
 					<button type="submit" id="guardarCambiosCliente"
 						class="btn btn-success float-right"
-						ng-click="actualizarDatosCliente()">Guardar Cambios</button>
+						ng-click="guardarProducto(productoEditar,'#modalEditarProducto')">Guardar</button>
 					<button type="reset" class="btn btn-secondary float-left" data-dismiss="modal">Borrar
 						Campos</button>
 				</form>
 			</div>
 		</div>
 	</div>
+	
+	<div class="modal fade" tabindex="-1" id="modalEliminarProducto" role="">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Eliminar Producto</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form class="modal-body">
+					<p>
+						Estas seguro de eliminar el producto: {{productoEliminar.nombre}}
+					</p>
+					<button type="reset" class="btn btn-success float-left" data-dismiss="modal">
+					 Conserver Producto
+					</button>
+					<button type="submit" id="guardarCambiosCliente" class="btn btn-danger float-right"
+					ng-click="eliminarProducto(productoEliminar,'#modalEliminarProducto')">
+					Eliminar
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
 	<footer th:replace="layout/layout :: footer"></footer>
+	<script type="text/javascript" th:src="@{/js/productos/productos.js}"></script>
 </body>
 </html>
