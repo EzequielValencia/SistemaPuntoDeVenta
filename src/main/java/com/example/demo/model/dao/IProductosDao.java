@@ -7,6 +7,6 @@ import com.example.demo.model.entity.Producto;
 
 public interface IProductosDao extends PagingAndSortingRepository<Producto, Long> {
 
-	@Query("select p from Producto p where p.id=?1 and p.existencia>1 ")
+	@Query("select p from Producto p where p.id=?1 and p.existencia>=1 ")
 	public Producto findeOneByIdAndExistenciaHigherOne(Long id);
 }

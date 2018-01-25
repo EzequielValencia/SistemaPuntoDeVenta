@@ -1,5 +1,7 @@
 package com.example.demo.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,11 +40,23 @@ public class FacturasController {
 		return f;
 	}
 	
+	@GetMapping(value="/listadoFacturas")
+	public String listadoFacturas(Model model){
+		model.addAttribute("facturas",(List<Factura>) facturasServices.findAll());
+		return "facturas/listaFacturas"; 
+	}
+	
+	
 	@GetMapping(value="/detallesFactura")
 	public String getFactura(@RequestParam(value="idFactura") Long idFactura,Model model) {
 		Factura f = facturasServices.findOne(idFactura);
 		model.addAttribute("factura", f);
 		return "facturas/detalleFactura";
+	}
+	
+	@GetMapping(value="/factura")
+	public @ResponseBody Factura getFactura(@RequestParam(value="idFactura") Long idFactura){
+		return facturasServices.findOne(idFactura);
 	}
 	
 	@PostMapping(value="/eliminarFactura")

@@ -51,14 +51,26 @@ public class ProductosController {
 	@GetMapping(value="/productoParaFactura")
 	public @ResponseBody Producto getProductoFactura(@RequestParam(value="idProducto") Long id) {
 		Producto encontrado=null;
-		encontrado=productosService.findeOneByIdAndExistenciaHigherOne(id);
-		if(encontrado!=null) {
+		encontrado=productosService.findOne(id);
+		if(encontrado!=null && encontrado.getExistencia()>=1) {
 			System.out.println("Si hay aun de ese producto");
-			return encontrado;
+			encontrado.setExistencia(encontrado.getExistencia()-1);
+			productosService.save(encontrado);
+			encontrado.setExistencia(encontrado.getExistencia()+1);
 		}
 		System.out.println("Ya no  hay de ese producto");
-		return new Producto();
+		return encontrado;
 	}
+	
+	@PostMapping(value="/reestablercerExistenciaProducto")
+	public @ResponseBody Boolean reestablercerExistenciaProducto(@RequestParam(value="cantidadAReestablecer")Integer cantidadAReestablecer,
+												@RequestParam(value="idProducto") Long idProducto) {
+		Producto p = productosService.findOne(idProducto);
+		p.setExistencia(p.getExistencia()+cantidadAReestablecer);
+		productosService.save(p);
+		return new Boolean(true);
+	}
+	
 	@PostMapping(value="/eliminarProducto")
 	public @ResponseBody Boolean eliminarProducto(@RequestBody Producto producto) {
 		

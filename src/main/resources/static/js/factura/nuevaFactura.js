@@ -24,12 +24,16 @@ angular.module('SistemaPuntoDeVenta')
 		}else{
 			$http({
 			  method:"GET",
-			  url:url_principal+'productos/producto/'+$scope.codigoProducto
+			  url:url_principal+'productos/productoParaFactura?idProducto='+$scope.codigoProducto
 			}).then(function succesCallback(data){
 				if(data.data!=""){
 					var producto = data.data;
-					$scope.agregaProductoAFactura(producto);
-					$scope.codigoProducto='';
+					if(producto.existencia!=0){
+						$scope.agregaProductoAFactura(producto);
+						$scope.codigoProducto='';
+					}else{
+						mostrarAlerta("Este producto esta agotado","danger");
+					}
 				}else{
 					mostrarAlerta("El producto no existe." +
 							"Verifica el codigo y vuelve a intentar","danger");
@@ -98,6 +102,16 @@ angular.module('SistemaPuntoDeVenta')
 		$scope.calculaTotal();
 	}
 	
+	$scope.reestablacerExistencia = function(item){
+		$http({
+			method:"POST",
+			url:url_principal+"productos/reestablercerExistenciaProducto?cantidadAReestablecer="+item.cantidad+"&idProducto="+item.producto.id
+		}).then(function succesCallBack(data){
+			console.log(data);
+		},function errorCallBack(e){
+			console.log(e);
+		})
+	};
 	
 	
 	function getFacturaNueva(){
