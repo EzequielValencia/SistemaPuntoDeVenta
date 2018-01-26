@@ -29,6 +29,17 @@ public class FacturasController {
 	private @Autowired IClienteDao clienteService;
 	private @Autowired IProductosDao productosDao;
 	
+	@GetMapping(value="")
+	public String listaFacturas(){
+		
+		return "facturas/listadoFacturas";
+	}
+	
+	@GetMapping(value="/listaFacturas")
+	public @ResponseBody List<Factura> listadoFacturas(){
+		return (List<Factura>)facturasServices.findAll();
+	}
+	
 	@GetMapping(value="/nueva")
 	public String nuevaFactura() {
 		return "facturas/nuevaFactura";
