@@ -1,15 +1,28 @@
 angular.module("SistemaPuntoDeVenta").
 controller('seccionProductos',function($scope,$http){
 	$scope.prodcutos=[];
-	$scope.productoNuevo={};
+	$scope.productoNuevo={nombre:'',precioCosto:0,precioVenta:0,cantidadMinima:0,porcentajeGanancia:0,existencia:0};
 	$scope.productoEliminar={};
 	$scope.productoEditar={};
-	
 	getListaProductos();
 	
-	$scope.guardarProducto=function(){
-		console.log($scope.productoNuevo.imagen);
+	
+	$scope.definirClase = function(producto){
+		if(producto.existencia == 0){
+			return 'bg-danger text-white';
+		}
+		if(producto.existencia < producto.cantidadMinima){
+			return 'bg-warning text-white';
+		}
 	}
+	
+	$scope.calcularGanancia = function (producto){
+		if(producto.porcentajeGanancia == undefined){
+			producto.porcentajeGanancia = 0;
+		}
+		producto.precioVenta = producto.precioCosto + (producto.precioCosto * (producto.porcentajeGanancia/100));  
+	}
+	
 	
 	$scope.getProducto = function(id,producto){
 		console.log(url_principal+"productos/producto/"+id);
@@ -38,9 +51,8 @@ controller('seccionProductos',function($scope,$http){
 				$(modal).modal('hide');
 				getListaProductos();
 				mostrarAlerta('Producto guardado correctamente','succes');
-			}
-			
-			
+				//producto == $scope.productoNuevo?($scope.productoNuevo= {nombre:'',precioCosto:0,precioVenta:0,cantidadMinima:0,porcentajeGanancia:0,existencia:0}):;
+				};
 		},function errorCallback(e){
 			console.log(e);
 		});
@@ -75,6 +87,7 @@ controller('seccionProductos',function($scope,$http){
 			url: url_principal+"productos/listaProductos"
 		}).then(function succesCallback(data){
 			$scope.productos = data.data;
+		
 		},function errorCallback (e){
 			console.log(e);
 		});

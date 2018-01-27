@@ -51,9 +51,9 @@
 								<tr th:each="itemFactura : ${factura.itemsFactura}">
 									<td th:text="${itemFactura.producto.id}"></td>
 									<td th:text="${itemFactura.producto.nombre}"></td>
-									<td th:text="${itemFactura.producto.precio}"></td>
+									<td th:text="${itemFactura.producto.precioVenta}"></td>
 									<td th:text="${itemFactura.cantidad}"></td>
-									<td th:text="${itemFactura.producto.precio * itemFactura.cantidad}"></td>
+									<td th:text="${itemFactura.producto.precioVenta * itemFactura.cantidad}"></td>
 								</tr>
 							</tbody>
 						</table>

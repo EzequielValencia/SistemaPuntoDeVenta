@@ -30,7 +30,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="factura in facturas | filter:filtro">
+					<tr ng-repeat="factura in facturas | filter:{id:filtro}">
 						<td class="text-center">{{factura.id}}</td>
 						<td>{{factura.observacion}}</td>
 						<td class="text-center">{{factura.fechaRealizacion}}</td>

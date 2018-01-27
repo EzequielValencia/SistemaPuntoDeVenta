@@ -19,22 +19,22 @@
 				<tr>
 					<th>ID</th>
 					<th>Nombre</th>
-					<th>Descripción</th>
 					<th>Existencia</th>
+					<th>Existencia Minima</th>
 					<th>Precio</th>
-					<th>Imagen</th>
+					<th>Precio Venta</th>
 					<th>Editar</th>
 					<th>Eliminar</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="producto in productos">
+				<tr ng-repeat="producto in productos" ng-class="definirClase(producto)">
 					<td >{{producto.id}}</td>
 					<td >{{producto.nombre}}</td>
-					<td >{{producto.descripcion}}</td>
 					<td >{{producto.existencia}}</td>
-					<td >{{producto.precio}}</td>
-					<td ></td>
+					<td >{{producto.cantidadMinima}}</td>
+					<td >{{producto.precioCosto}}</td>
+					<td >{{producto.precioVenta}}</td>
 					<td>
 						<button class="btn btn-warning" data-toggle="modal" data-target="#modalEditarProducto"
 							ng-click="getProducto(producto.id,1)">Editar
@@ -79,11 +79,27 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="example-search-input" class="col-2 col-form-label">Precio</label>
+						<label for="example-search-input" class="col-2 col-form-label">Precio Costo</label>
 						<div class="col-10">
-							<input class="form-control" type="text"
-								name="apellidoPaternoNuevo" id="apellidoPaternoNuevo"
-								ng-model="productoNuevo.precio" required="true" />
+							<input class="form-control" type="number"
+								ng-change="calcularGanancia(productoNuevo)"
+								ng-model="productoNuevo.precioCosto" required="true" />
+
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="example-search-input" class="col-2 col-form-label">Ganancia</label>
+						<div class="col-10">
+							<input class="form-control" type="number" ng-change="calcularGanancia(productoNuevo)"
+								ng-model="productoNuevo.porcentajeGanancia" required="true" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="example-search-input" class="col-2 col-form-label">Precio Venta</label>
+						<div class="col-10">
+							<input class="form-control" type="number"
+								ng-change="calcularGanancia(productoNuevo)"
+								ng-model="productoNuevo.precioVenta" required="true" disabled="disabled" />
 
 						</div>
 					</div>
@@ -97,20 +113,12 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="example-url-input" class="col-2 col-form-label">Descripcion</label>
+						<label for="example-email-input" class="col-2 col-form-label">Existencia Minima</label>
 						<div class="col-10">
-							<input class="form-control" name="companiaNuevo" type="text"
-								id="companiaNuevo" ng-model="productoNuevo.descripcion" />
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="example-tel-input" class="col-2 col-form-label">Correo</label>
-						<div class="col-10">
-							<input class="form-control" type="file" name="correoNuevo"
-								id="correoNuevo" ng-model="productoNuevo.imagen"  />
-						</div>
-						<div class="col-12" ng-if="productoNuevo.imagen">
-							<img src="productoNuevo.imagen"/>
+							<input class="form-control" type="number"
+								name="apellidoMaternoNuevo" id="apellidoMaternoNuevo"
+								ng-model="productoNuevo.cantidadMinima" required="true" />
+
 						</div>
 					</div>
 					<hr />
@@ -144,11 +152,27 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="example-search-input" class="col-2 col-form-label">Precio</label>
+						<label for="example-search-input" class="col-2 col-form-label">Precio Costo</label>
 						<div class="col-10">
-							<input class="form-control" type="text"
-								name="apellidoPaternoNuevo" id="apellidoPaternoNuevo"
-								ng-model="productoEditar.precio" required="true" />
+							<input class="form-control" type="number"
+								ng-change="calcularGanancia(productoEditar)" 
+								ng-model="productoEditar.precioCosto" required="true" />
+
+						</div>
+					</div>
+										<div class="form-group row">
+						<label for="example-search-input" class="col-2 col-form-label">Ganancia</label>
+						<div class="col-10">
+							<input class="form-control" type="number" ng-change="calcularGanancia(productoEditar)"
+								ng-model="productoEditar.porcentajeGanancia" required="true" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="example-search-input" class="col-2 col-form-label">Precio Venta</label>
+						<div class="col-10">
+							<input class="form-control" type="number"
+								ng-change="calcularGanancia(productoEditar)" 
+								ng-model="productoEditar.precioVenta" required="true" disabled="disabled"/>
 
 						</div>
 					</div>
@@ -162,20 +186,12 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="example-url-input" class="col-2 col-form-label">Descripcion</label>
+						<label for="example-email-input" class="col-2 col-form-label">Existencia</label>
 						<div class="col-10">
-							<input class="form-control" name="companiaNuevo" type="text"
-								id="companiaNuevo" ng-model="productoEditar.descripcion" />
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="example-tel-input" class="col-2 col-form-label">Correo</label>
-						<div class="col-10">
-							<input class="form-control" type="file" name="correoNuevo"
-								id="correoNuevo" ng-model="productoEditar.imagen"  />
-						</div>
-						<div class="col-12" ng-if="productoEditar.imagen">
-							<img src="productoEditar.imagen"/>
+							<input class="form-control" type="number"
+								name="apellidoMaternoNuevo" id="apellidoMaternoNuevo"
+								ng-model="productoEditar.cantidadMinima" required="true" />
+
 						</div>
 					</div>
 					<hr />

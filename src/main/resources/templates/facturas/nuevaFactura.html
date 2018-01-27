@@ -47,7 +47,7 @@
 					<td class="text-center">{{item.producto.id}}</td>
 					<td class="text-center">{{item.producto.nombre}}</td>
 					<td class="text-center">{{item.cantidad}} </td>
-					<td class="text-center">{{item.cantidad * item.producto.precio | currency:"$"}}</td>
+					<td class="text-center">{{item.cantidad * item.producto.precioVenta | currency:"$"}}</td>
 					<th class="text-center">
 						<button type="button" class="btn btn-danger" ng-click="quitarProducto(item.producto.id); reestablacerExistencia(item)">Eliminar <span aria-hidden="true">&times;</span></button>
 					</th>

@@ -29,6 +29,9 @@ angular.module('SistemaPuntoDeVenta')
 				if(data.data!=""){
 					var producto = data.data;
 					if(producto.existencia!=0){
+						if(producto.existencia < producto.cantidadMinima){
+							mostrarAlerta("Tiene menos de la cantidad minina del producto","warning");
+						}
 						$scope.agregaProductoAFactura(producto);
 						$scope.codigoProducto='';
 					}else{
@@ -69,7 +72,7 @@ angular.module('SistemaPuntoDeVenta')
 		for(var i=0;i<cantidadProductosEnFactura;i++){
 				console.log($scope.facturaNueva.itemsFactura[i]);
 				$scope.total += $scope.facturaNueva.itemsFactura[i].cantidad * 
-				$scope.facturaNueva.itemsFactura[i].producto.precio;	
+				$scope.facturaNueva.itemsFactura[i].producto.precioVenta;	
 			}
 		}
 	

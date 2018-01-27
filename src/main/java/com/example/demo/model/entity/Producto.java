@@ -2,6 +2,7 @@ package com.example.demo.model.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,39 +21,51 @@ public class Producto implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(columnDefinition="bigint zerofill")
 	private Long id;
 	
 	private String nombre;
 	
-	private Double precio;
+	@Column(name="precio_costo")
+	private Double precioCosto=0.0;
 	
-	private String descripcion;
+	@Column(name="porcentaje_ganancia",nullable=false,columnDefinition="double default 0")
+	private Double porcentajeGanancia=0D;
 	
+	@Column(name="precio_venta")
+	private Double precioVenta=0.0;
+	
+	@Column(name="cantidad_minima")
+	private Integer cantidadMinima;
+
 	private Integer existencia;
+
 	
-	private String imagen;
 	
-	public String getImagen() {
-		return imagen;
+	public Double getPorcentajeGanancia() {
+		return porcentajeGanancia;
 	}
 
-	public void setImagen(String imagen) {
-		this.imagen = imagen;
+	public void setPorcentajeGanancia(Double porcentajeGanancia) {
+		this.porcentajeGanancia = porcentajeGanancia;
 	}
-
-
 
 	public Integer getExistencia() {
 		return existencia;
 	}
-
-
 
 	public void setExistencia(Integer existencia) {
 		this.existencia = existencia;
 	}
 
 
+	public Integer getCantidadMinima() {
+		return cantidadMinima;
+	}
+
+	public void setCantidadMinima(Integer cantidadMinima) {
+		this.cantidadMinima = cantidadMinima;
+	}
 
 	public Long getId() {
 		return id;
@@ -77,34 +90,25 @@ public class Producto implements Serializable {
 	}
 
 
-
-	public Double getPrecio() {
-		return precio;
+	public Double getPrecioCosto() {
+		return precioCosto;
 	}
 
-
-
-	public void setPrecio(Double precio) {
-		this.precio = precio;
+	public void setPrecioCosto(Double precioCosto) {
+		this.precioCosto = precioCosto;
 	}
 
-
-
-	public String getDescripcion() {
-		return descripcion;
+	public Double getPrecioVenta() {
+		return precioVenta;
 	}
 
-
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+	public void setPrecioVenta(Double precioVenta) {
+		this.precioVenta = precioVenta;
 	}
-
-
 
 	@Override
 	public String toString() {
-		return "Producto [id=" + id + ", nombre=" + nombre + ", precio=" + precio + ", descripcion=" + descripcion
+		return "Producto [id=" + id + ", nombre=" + nombre + ", precio=" + precioCosto 
 				+ ", existencia=" + existencia + "]";
 	}
 
