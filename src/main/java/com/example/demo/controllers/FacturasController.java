@@ -1,5 +1,7 @@
 package com.example.demo.controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,19 @@ public class FacturasController {
 	@GetMapping(value="/listaFacturas")
 	public @ResponseBody List<Factura> listadoFacturas(){
 		return (List<Factura>)facturasServices.findAll();
+	}
+	
+	@GetMapping(value="/listaFacturasPorFecha")
+	public @ResponseBody List<Factura> listaFacturasPorFecha(@RequestParam(value="fechaSolicitada")String fechaSolicitada){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
+		
+		try {
+			return facturasServices.findByFechaRealizacion(sdf.parse(fechaSolicitada));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	@GetMapping(value="/nueva")

@@ -63,7 +63,7 @@
 			<button type="button" 
 				class="btn btn-primary btn-sm my-3 float-right" 
 				data-toggle="modal" 
-				data-target="#modalVentasDelDia" ng-click="listadoDeVentas();">
+				data-target="#modalVentasDelDia" ng-click="fijarFechaActual();listadoDeVentas();">
 				<i class="fas fa-clipboard"></i> Ventas del d&iacute;a
 			</button>
 		</div>
@@ -144,7 +144,7 @@
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title text-center">VENTAS DEL D&Iacute;A</h5>
+					<h5 class="modal-title text-center">VENTAS DEL D&Iacute;A {{fechaSolicitada}}</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -166,7 +166,6 @@
 								<thead>
 									<tr class="thead-inverse">
 										<th class="text-center">Folio</th>
-										<th class="text-center">Descipcion</th>
 										<th class="text-center">Fecha</th>
 										<th class="text-center">Total</th>
 										<th class="text-center">Ver</th>
@@ -176,7 +175,6 @@
 								<tbody>
 									<tr ng-repeat="factura in facturas">
 										<td class="text-center">{{factura.id}}</td>
-										<td>{{factura.observacion}}</td>
 										<td class="text-center">{{factura.fechaRealizacion}}</td>
 										<td class="text-center">{{factura.total}}</td>
 										<td class="text-center">

@@ -7,7 +7,16 @@ angular.module('SistemaPuntoDeVenta')
 	$scope.clienteAsociado = 0;
 	$scope.total=0;
 	getFacturaNueva();
+
 	
+	$scope.fijarFechaActual = function(){
+		var anio = new Date().getFullYear();
+		var mes = new Date().getMonth()+1;
+		var dia = new Date().getDate();
+		$scope.fechaSolicitada = anio+'-'+mes+'-'+dia;
+		$("#selectorFecha").val($scope.fechaSolicitada);
+		console.log($scope.fechaSolicitada);
+	}
 	
 	$scope.verificaTeclaPrecionada = function(event){
 		if(event.keyCode == 13){
@@ -167,9 +176,10 @@ angular.module('SistemaPuntoDeVenta')
 	}
 	
 	$scope.listadoDeVentas = function(){
+		console.log(url_principal+"facturas/listaFacturasPorFecha?fechaSolicitada="+$scope.fechaSolicitada);
 		$http({
 			method:"GET",
-			url:url_principal+"/facturas/listaFacturas"
+			url:url_principal+"facturas/listaFacturasPorFecha?fechaSolicitada="+$scope.fechaSolicitada
 		}).then(function succesCallback(data){
 			$scope.facturas = data.data;
 			console.log($scope.facturas);
@@ -203,9 +213,10 @@ angular.module('SistemaPuntoDeVenta')
 			console.log(e);
 		});
 	}
+	
 	$scope.fechaSeleccionada = function(){
 		$scope.fechaSolicitada = $("#selectorFecha").val();
-		console.log($scope.fechaSolicitada);
+		$scope.listadoDeVentas();
 	}
 
 });
