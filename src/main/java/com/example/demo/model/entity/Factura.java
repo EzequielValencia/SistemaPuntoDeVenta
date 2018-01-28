@@ -49,6 +49,9 @@ public class Factura implements Serializable {
 	@JoinColumn(name="factura_id")
 	private List<ItemFactura> itemsFactura;
 
+	@Column(name="pago_con")
+	private Double pagoCon;
+	
 	private Double total;
 
 	
@@ -57,6 +60,19 @@ public class Factura implements Serializable {
 	}
 	
 	
+	
+	public Double getPagoCon() {
+		return pagoCon;
+	}
+
+
+
+	public void setPagoCon(Double pagoCon) {
+		this.pagoCon = pagoCon;
+	}
+
+
+
 	public Cliente getCliente() {
 		return cliente;
 	}

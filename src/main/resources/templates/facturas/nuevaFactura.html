@@ -3,64 +3,134 @@
 	<head th:replace="layout/layout :: head">
 		 
 	</head>
-<body ng-app="SistemaPuntoDeVenta" ng-controller="facturasController">
+<body ng-app="SistemaPuntoDeVenta" ng-controller="facturasController" ng-keydown="evitarRecargarPagina($event)" ng-keyup="teclasPrecionadas=[]">
 	<link rel="stylesheet"	th:href="@{/css/nuevaFactura.css}" />
 	<nav th:replace="layout/layout :: nav"></nav>
 	
 	<div class="container">
-		<h1 class="py-1 display-5 text-center">Nueva factura para {{clienteAsociado.nombre+' '+clienteAsociado.apellidoPaterno+' '+clienteAsociado.apellidoMaterno}}</h1>
+		<h1 class="py-1 display-5 text-center">Venta</h1>
 		<hr class="bg-danger" />
-		<a class="btn btn-primary btn-sm my-3" th:href="@{/clientes/detalleCliente/{{clienteAsociado.id}}}"><i class="fas fa-arrow-circle-left"></i> Volver</a>
-		<form>
-			<div class="form-group">
-					<input style="text-align: right;" class="form-control left" 
-					ng-model="codigoProducto" ng-keyup="verificaTeclaPrecionada($event)" 
-					placeholder="Ingresa el codigo del producto" autofocus="autofocus"/>
-			</div>
-			<div class="form-group">
-					<button type="button" class="btn btn-success btn-block" ng-click="buscarProducto()">Buscar</button>
-			</div>
-		</form>
-		<form>
+		<!-- <form>
 			<div class="form-group">
 					<input style="text-align: right;" class="form-control left" 
 					ng-model="facturaNueva.observacion" placeholder="Concepto"/>
 			</div>
+		</form> -->
+		<button type="button" class="btn btn-lg btn-danger float-right" data-toggle="modal" data-target="#modalCancelarVenta">Cancelar Venta Actual</button>
+		<form class="form-inline ">
+				  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+				    <div class="input-group-addon">
+				    	<h5><i class="fas fa-barcode"></i></h5>
+				    </div>
+				    <input type="text" 
+				    	ng-model="codigoProducto" 
+				    	class="form-control" id="inlineFormInputGroup" 
+				    	placeholder="Codigo del producto"
+				    	ng-keyup="verificaTeclaPrecionada($event)"/>
+				  </div>
+				  <button type="button" class="btn btn-lg btn-success float-right" ng-click="buscarProducto()">Buscar</button>
 		</form>
-		
-		<div class="container">
-			<h3 class="text-right text-danger">Total: {{total | currency:"$"}}</h3>
-		</div>
 		<div class="containerTable">
-		<table class="table table-striped table-bordered table-fixed display">
-			<thead class="thead-inverse">
-				<tr>
-					<th class="text-center">Codigo</th>
-					<th class="text-center">Nombre</th>
-					<th class="text-center">Cantidad</th>
-					<th class="text-center">Costo</th>
-					<th class="text-center">Quitar</th>
-				</tr>
-			</thead>
-			<tbody >
-				<tr ng-repeat="item in facturaNueva.itemsFactura">
-					<td class="text-center">{{item.producto.id}}</td>
-					<td class="text-center">{{item.producto.nombre}}</td>
-					<td class="text-center">{{item.cantidad}} </td>
-					<td class="text-center">{{item.cantidad * item.producto.precioVenta | currency:"$"}}</td>
-					<th class="text-center">
-						<button type="button" class="btn btn-danger" ng-click="quitarProducto(item.producto.id); reestablacerExistencia(item)">Eliminar <span aria-hidden="true">&times;</span></button>
-					</th>
-				</tr>
-			</tbody>
-		</table>
+			<table class="table table-striped table-bordered my-3">
+				<thead class="thead-inverse">
+					<tr>
+						<th class="text-center">Codigo</th>
+						<th class="text-center">Nombre</th>
+						<th class="text-center">Cantidad</th>
+						<th class="text-center">Costo</th>
+						<th class="text-center">Quitar</th>
+					</tr>
+				</thead>
+				<tbody >
+					<tr ng-repeat="item in facturaNueva.itemsFactura">
+						<td class="text-center">{{item.producto.id}}</td>
+						<td class="text-center">{{item.producto.nombre}}</td>
+						<td class="text-center">{{item.cantidad}} </td>
+						<td class="text-center">{{item.cantidad * item.producto.precioVenta | currency:"$"}}</td>
+						<th class="text-center">
+							<button type="button" class="btn btn-danger" ng-click="quitarProducto(item.producto.id); reestablacerExistencia(item)">Eliminar <span aria-hidden="true">&times;</span></button>
+						</th>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 		<div class="container">
-			<div class="row">
-				<button type="button" class="btn btn-success" ng-click="finalizarVenta()">Finalizar venta</button>
-				<button type="button" class="btn btn-danger" ng-click="cancelarVenta()">Cancelar venta</button>
+			<div class="float-left">
+				<!-- <button type="button" class="btn btn-success " ng-click="finalizarVenta()">Finalizar venta</button> -->
+				<button type="button" class="btn btn-success " data-toggle="modal" data-target="#modalFinalizarVenta">Finalizar venta</button>
 			</div>
 			<h3 class="text-right text-danger">Total: {{total | currency:"$"}}</h3>
+			<button type="button" class="btn btn-primary btn-sm my-3 float-right" ><i class="fas fa-clipboard"></i> Ventas del d&iacute;a</button>
+		</div>
+		
+	</div>
+	
+	<div class="modal fade" tabindex="-1" id="modalCancelarVenta" role="">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Cancelar venta actual</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form class="modal-body">
+					<p>
+						<h4>De verdad quieres eliminar todos los productos?</h4><br/>
+					</p>
+					<button type="reset" class="btn btn-success float-left" data-dismiss="modal">
+					 Continuar con la venta
+					</button>
+					<button type="submit" id="guardarCambiosCliente" class="btn btn-danger float-right"
+					ng-click="cancelarVenta()" data-dismiss="modal">
+					 	Cancelar venta
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade bd-example-modal-lg" tabindex="-1" id="modalFinalizarVenta" role="">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title text-center">{{total}}</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="container">
+					<ul class="nav nav-tabs" role="tablist">
+					  <li class="nav-item">
+					    <a class="nav-link active" data-toggle="tab" href="#efectiv" role="tab">Efectivo</a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link" data-toggle="tab" href="#profile" role="tab">Cr&eacute;dito</a>
+					  </li>
+					</ul>
+					<div class="tab-content">
+					  <div class="tab-pane active p-3" id="efectivo" role="tabpanel">
+					  	<form>
+					  		<div class="form-group row">
+					  			<label for="pagoCon" class="col-2 col-form-label">Pag&oacute; Con</label>
+					  			<div class="col-10">
+					  				<input class="form-control" placeholder="{{total}}" ng-model="facturaNueva.pagoCon"/>
+					  			</div>
+					  		</div>
+					  		<div class="form-group row">
+					  			<label for="pagoCon" class="col-2 col-form-label">Su Cambio</label>
+					  			<label for="pagoCon" class="col-10 col-form-label" value="hola"></label>
+					  		</div>
+					  	</form>
+					  </div>
+					  <div class="tab-pane" id="profile" role="tabpanel">
+					  	
+					  </div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	

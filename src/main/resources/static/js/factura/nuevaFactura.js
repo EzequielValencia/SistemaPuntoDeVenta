@@ -1,12 +1,9 @@
 angular.module('SistemaPuntoDeVenta')
 .controller('facturasController',function($scope,$http){
-	console.log("Nueva factura");
 	$scope.facturaNueva = {};
-	$scope.clienteAsociado={};
 	$scope.codigoProducto='';
 	$scope.total=0;
 	getFacturaNueva();
-	getClienteAsociado();
 	
 	
 	$scope.verificaTeclaPrecionada = function(event){
@@ -15,8 +12,30 @@ angular.module('SistemaPuntoDeVenta')
 		}
 	}
 	
+	$scope.evitarRecargarPagina = function(event){
+		if(event.keyCode==116){
+			event.preventDefault();
+			if(confirm("¿Quieres recargar la pagina?.\nTendras que ingresar de nueva cuenta los productos")){
+				console.log("Acepto");
+				$scope.facturaNueva.itemsFactura.forEach(function(item){
+					
+					$scope.reestablacerExistencia(item);
+				});
+				
+				location.reload(true);
+			}
+		}
+		
+	}
 	
-	
+	$scope.cancelarVenta = function(){
+		$scope.facturaNueva.itemsFactura.forEach(function(item){
+			$scope.reestablacerExistencia(item);
+		});
+		$scope.facturaNueva.itemsFactura=[];
+		$scope.calculaTotal();
+		mostrarAlerta("Venta cancelada","info");
+	}
 	
 	$scope.buscarProducto= function(){
 		if($scope.codigoProducto.length==0){
@@ -70,7 +89,6 @@ angular.module('SistemaPuntoDeVenta')
 		$scope.total=0;
 		var cantidadProductosEnFactura=$scope.facturaNueva.itemsFactura.length;
 		for(var i=0;i<cantidadProductosEnFactura;i++){
-				console.log($scope.facturaNueva.itemsFactura[i]);
 				$scope.total += $scope.facturaNueva.itemsFactura[i].cantidad * 
 				$scope.facturaNueva.itemsFactura[i].producto.precioVenta;	
 			}
@@ -110,11 +128,12 @@ angular.module('SistemaPuntoDeVenta')
 			method:"POST",
 			url:url_principal+"productos/reestablercerExistenciaProducto?cantidadAReestablecer="+item.cantidad+"&idProducto="+item.producto.id
 		}).then(function succesCallBack(data){
-			console.log(data);
+			
 		},function errorCallBack(e){
 			console.log(e);
 		})
 	};
+	
 	
 	
 	function getFacturaNueva(){
@@ -123,22 +142,11 @@ angular.module('SistemaPuntoDeVenta')
 		  url:url_principal+'/facturas/nuevaFactura'
 		}).then(function succesCallback(data){
 			$scope.facturaNueva=data.data;
+			console.log($scope.facturaNueva);
 		},function errorCallback(e){
 			console.log(e);
 		});
 	}
 	
-	function getClienteAsociado(){
-      var prmstr = window.location.search.substr(1);
-      var idCliente = prmstr.substring(prmstr.indexOf('=')+1);
-	      
-		$http({
-		  method:"GET",
-		  url:url_principal+'/clientes/buscarCliente/'+idCliente
-		}).then(function succesCallback(data){
-			$scope.clienteAsociado=data.data;
-		},function errorCallback(e){
-			console.log(e);
-		});
-	}
+
 });

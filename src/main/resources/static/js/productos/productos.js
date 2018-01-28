@@ -51,11 +51,18 @@ controller('seccionProductos',function($scope,$http){
 				$(modal).modal('hide');
 				getListaProductos();
 				mostrarAlerta('Producto guardado correctamente','succes');
-				//producto == $scope.productoNuevo?($scope.productoNuevo= {nombre:'',precioCosto:0,precioVenta:0,cantidadMinima:0,porcentajeGanancia:0,existencia:0}):;
-				};
+				console.log(producto == $scope.productoNuevo);
+				if(producto == $scope.productoNuevo){
+					$scope.productoNuevo= {nombre:'',precioCosto:0,precioVenta:0,cantidadMinima:0,porcentajeGanancia:0,existencia:0}
+				}
+			};
 		},function errorCallback(e){
 			console.log(e);
 		});
+	}
+	
+	$scope.reinicarProdcutoNuevo = function(){
+		$scope.productoNuevo= {nombre:'',precioCosto:0,precioVenta:0,cantidadMinima:0,porcentajeGanancia:0,existencia:0};
 	}
 	
 	$scope.eliminarProducto = function(producto,modal){
