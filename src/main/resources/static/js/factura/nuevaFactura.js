@@ -1,7 +1,10 @@
 angular.module('SistemaPuntoDeVenta')
 .controller('facturasController',function($scope,$http){
 	$scope.facturaNueva = {};
+	$scope.fechaSolicitada;
 	$scope.codigoProducto='';
+	$scope.listaClientes=[];
+	$scope.clienteAsociado = 0;
 	$scope.total=0;
 	getFacturaNueva();
 	
@@ -35,6 +38,15 @@ angular.module('SistemaPuntoDeVenta')
 		$scope.facturaNueva.itemsFactura=[];
 		$scope.calculaTotal();
 		mostrarAlerta("Venta cancelada","info");
+	}
+	
+	$scope.sePuedeVender = function(){
+		if($scope.total>0){
+			$scope.traeListaClientes();
+			$("#modalFinalizarVenta").modal('show');
+		}else{
+			mostrarAlerta("No hay productos para vender","info");
+		}
 	}
 	
 	$scope.buscarProducto= function(){
@@ -98,7 +110,7 @@ angular.module('SistemaPuntoDeVenta')
 		$scope.facturaNueva.total = $scope.total; 
 		$http({
 			method:"POST",
-			url:url_principal+"/facturas/guardarFactura/"+$scope.clienteAsociado.id,
+			url:url_principal+"/facturas/guardarFactura/"+$scope.clienteAsociado,
 			data:JSON.stringify($scope.facturaNueva)
 		}).then(function succesCallback (data){
 			if(data.data){
@@ -135,6 +147,50 @@ angular.module('SistemaPuntoDeVenta')
 	};
 	
 	
+	$scope.traeListaClientes = function(){
+		$http({
+			  method:"GET",
+			  url:url_principal+'/clientes/listaClientes'
+			}).then(function succesCallback(data){
+				$scope.listaClientes=data.data;
+				console.log($scope.listaClientes);
+			},function errorCallback(e){
+				console.log(e);
+			});
+	}
+	
+	$scope.darCambio = function(){
+		if($scope.facturaNueva.pagoCon==0 || $scope.facturaNueva.pagoCon==undefined){
+			return 0;
+		}
+		return $scope.facturaNueva.pagoCon - $scope.total;
+	}
+	
+	$scope.listadoDeVentas = function(){
+		$http({
+			method:"GET",
+			url:url_principal+"/facturas/listaFacturas"
+		}).then(function succesCallback(data){
+			$scope.facturas = data.data;
+			console.log($scope.facturas);
+		},function errorCallback(e){
+			console.log(e);
+		});
+	}
+	
+	$scope.detalleFactura=function(facturaSolicitada){
+		console.log(url_principal+'facturas/detallesFactura?idFactura='+facturaSolicitada);
+		$http({
+			method:'GET',
+			url:url_principal+'facturas/detallesFactura?idFactura='+facturaSolicitada
+		}).then(function succesCallback(data){
+			$("#contenedorDetalleFactura").empty();
+			$("#contenedorDetalleFactura").addClass("bg-inverse");
+			$("#contenedorDetalleFactura").append(data.data);
+		},function errorCallback(e){
+			console.log(e);
+		});
+	}
 	
 	function getFacturaNueva(){
 		$http({
@@ -147,6 +203,9 @@ angular.module('SistemaPuntoDeVenta')
 			console.log(e);
 		});
 	}
-	
+	$scope.fechaSeleccionada = function(){
+		$scope.fechaSolicitada = $("#selectorFecha").val();
+		console.log($scope.fechaSolicitada);
+	}
 
 });

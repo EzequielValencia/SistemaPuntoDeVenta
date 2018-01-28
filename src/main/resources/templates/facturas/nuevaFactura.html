@@ -57,10 +57,15 @@
 		<div class="container">
 			<div class="float-left">
 				<!-- <button type="button" class="btn btn-success " ng-click="finalizarVenta()">Finalizar venta</button> -->
-				<button type="button" class="btn btn-success " data-toggle="modal" data-target="#modalFinalizarVenta">Finalizar venta</button>
+				<button type="button" class="btn btn-success " data-toggle="modal" ng-click="sePuedeVender()">Finalizar venta</button>
 			</div>
 			<h3 class="text-right text-danger">Total: {{total | currency:"$"}}</h3>
-			<button type="button" class="btn btn-primary btn-sm my-3 float-right" ><i class="fas fa-clipboard"></i> Ventas del d&iacute;a</button>
+			<button type="button" 
+				class="btn btn-primary btn-sm my-3 float-right" 
+				data-toggle="modal" 
+				data-target="#modalVentasDelDia" ng-click="listadoDeVentas();">
+				<i class="fas fa-clipboard"></i> Ventas del d&iacute;a
+			</button>
 		</div>
 		
 	</div>
@@ -95,45 +100,112 @@
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title text-center">{{total}}</h5>
+					<h5 class="modal-title text-center">Total de venta: $ {{total}}</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="container">
-					<ul class="nav nav-tabs" role="tablist">
-					  <li class="nav-item">
-					    <a class="nav-link active" data-toggle="tab" href="#efectiv" role="tab">Efectivo</a>
-					  </li>
-					  <li class="nav-item">
-					    <a class="nav-link" data-toggle="tab" href="#profile" role="tab">Cr&eacute;dito</a>
-					  </li>
-					</ul>
-					<div class="tab-content">
-					  <div class="tab-pane active p-3" id="efectivo" role="tabpanel">
-					  	<form>
-					  		<div class="form-group row">
-					  			<label for="pagoCon" class="col-2 col-form-label">Pag&oacute; Con</label>
-					  			<div class="col-10">
-					  				<input class="form-control" placeholder="{{total}}" ng-model="facturaNueva.pagoCon"/>
-					  			</div>
-					  		</div>
-					  		<div class="form-group row">
-					  			<label for="pagoCon" class="col-2 col-form-label">Su Cambio</label>
-					  			<label for="pagoCon" class="col-10 col-form-label" value="hola"></label>
-					  		</div>
-					  	</form>
-					  </div>
-					  <div class="tab-pane" id="profile" role="tabpanel">
-					  	
-					  </div>
+					<form class="my-4 p-3">
+						<div class="form-group row">
+							<label for="cliente" class="col-2 col-form-label">Cliente</label>
+							<div class="col-10">
+								<select ng-model="clienteAsociado" class="form-control">
+									<option value="0" selected="selected">Selecciona un cliente</option>
+									<option ng-repeat="cliente in listaClientes" value="{{cliente.id}}">{{cliente.nombre+' '+cliente.apellidoPaterno+' '+cliente.apellidoMaterno}}</option>
+								</select>
+							</div>
+				  		</div>
+				  		<div class="form-group row">
+				  			<label for="pagoCon" class="col-2 col-form-label">Pag&oacute; Con</label>
+				  			<div class="col-10">
+				  				<input id="pagoCon" class="form-control" placeholder="{{total}}" ng-model="facturaNueva.pagoCon"/>
+				  			</div>
+				  		</div>
+				  		<div class="form-group row">
+				  			<label  class="col-2 col-form-label">Su Cambio</label>
+				  			<div class="col-10">
+				  				<input  class="form-control"  ng-value="darCambio()" disabled="disabled"/>
+				  			</div>
+				  		</div>
+				  		<hr/>
+				  		<div class="form-group row p-2">
+				  			<button type="button" class="btn btn-danger float-left" ng-click="cancelarVenta()">Cancelar venta</button>
+				  			<button type="button" class="btn btn-succes float-right" ng-click="finalizarVenta()">Cobrar</button>
+				  		</div>
+					</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	<div class="modal fade bd-example-modal-lg" tabindex="-1" id="modalVentasDelDia" role="">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title text-center">VENTAS DEL D&Iacute;A</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="row">
+					<div class="col-md-6 col-sm-12 ">
+						<h1 class="text-center">Ventas del dia</h1>
+						<form>
+							<div class="form-group row">
+							  <label for="example-date-input" class="col-2 col-form-label">Fecha</label>
+							  <div class="col-10">
+							    <input class="form-control" type="date" ng-model="fechaSolicitada" id="selectorFecha" ng-change="fechaSeleccionada()"/>
+							  </div>
+							</div>
+						</form>
+						<div class="table-responsive" id="ventasDelDia">		
+							<table class="table table-striped table-bordered">
+								<thead>
+									<tr class="thead-inverse">
+										<th class="text-center">Folio</th>
+										<th class="text-center">Descipcion</th>
+										<th class="text-center">Fecha</th>
+										<th class="text-center">Total</th>
+										<th class="text-center">Ver</th>
+										<th class="text-center">Eliminar</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="factura in facturas">
+										<td class="text-center">{{factura.id}}</td>
+										<td>{{factura.observacion}}</td>
+										<td class="text-center">{{factura.fechaRealizacion}}</td>
+										<td class="text-center">{{factura.total}}</td>
+										<td class="text-center">
+											<a class="btn btn-primary btn-sm" ng-click="detalleFactura(factura.id)">Detalle</a>
+										</td>					
+										<td class="text-center">
+											<button type="button" 
+													class="btn btn-danger btn-sm" 
+													ng-click="getFactura(factura.id)" 
+													data-toggle="modal" 
+													data-target="#modalEliminarFactura">
+												Eliminar
+											</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+													
+					</div>
+					<div class="col-md-6 col-sm-12">
+						<h1 class="text-center">Venta </h1>
+						<div id="contenedorDetalleFactura">
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
 	<footer th:replace="layout/layout :: footer"></footer>
 	
 	

@@ -37,6 +37,10 @@ angular.module("SistemaPuntoDeVenta")
 		});
 	}
 	
+	$scope.detalleFacturaCliente = function(factura){
+		window.open(url_principal+'facturas/detallesFactura?idFactura='+factura,'','toolbar=no,status=no,scrollbars=yes');
+	}
+	
 	function getCliente(){
 		$http({
 			method:'GET',

@@ -38,6 +38,11 @@ public class ClienteController {
 		Page<Cliente> clientes = clienteService.findAll(pageRequest);
 		return clientes;
 	}
+	
+	@GetMapping(value="/listaClientes")
+	public @ResponseBody List<Cliente> listaClientes(){
+		return clienteService.findAll();
+	}
 		
 	@PostMapping(value="/crear")
 	public String crearClienteNuevo(@RequestBody Cliente cliente) {

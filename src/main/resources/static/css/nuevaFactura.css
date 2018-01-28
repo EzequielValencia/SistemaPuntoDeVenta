@@ -5,3 +5,15 @@
 	max-height: 300px;
 }
 
+.bordeIzquierdo{
+	border-left: 1px solid black;
+}
+.modal-lg {
+    min-width: 100%;
+}
+ 
+#contenedorDetalleFactura{
+	height: 500px;
+	overflow-x:auto;
+	overflow-y:auto;	
+} 

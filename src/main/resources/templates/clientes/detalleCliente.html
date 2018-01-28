@@ -39,7 +39,8 @@
 						<td>{{factura.fechaRealizacion}}</td>
 						<td>{{factura.total}}</td>
 						<td>
-							<a class="btn btn-primary btn-sm" th:href="@{/facturas/detallesFactura?idFactura={{factura.id}}}">Detalle</a>
+							<!--<a class="btn btn-primary btn-sm" th:href="@{/facturas/detallesFactura?idFactura={{factura.id}}}">Detalle</a>-->
+							<a class="btn btn-primary btn-sm" ng-click="detalleFacturaCliente(factura.id)">Detalle</a>
 						</td>					
 						<td>
 							<button type="button" 
