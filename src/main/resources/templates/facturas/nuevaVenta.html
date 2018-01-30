@@ -178,7 +178,7 @@
 										<td class="text-center">{{factura.fechaRealizacion}}</td>
 										<td class="text-center">{{factura.total}}</td>
 										<td class="text-center">
-											<a class="btn btn-primary btn-sm" ng-click="detalleFactura(factura.id)">Detalle</a>
+											<button type="button" class="btn btn-primary btn-sm" ng-click="detalleFactura(factura.id)">Detalle</button>
 										</td>					
 										<td class="text-center">
 											<button type="button" 
@@ -186,7 +186,7 @@
 													ng-click="getFactura(factura.id)" 
 													data-toggle="modal" 
 													data-target="#modalEliminarFactura">
-												Eliminar
+												Devoluci&oacute;n
 											</button>
 										</td>
 									</tr>
@@ -209,24 +209,22 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Quieres eliminar la factura: {{facturaAEliminar.id}}</h5>
+					<h5 class="modal-title">Quieres hacer la devolucion de la factura: {{facturaAEliminar.id}}?</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          <span aria-hidden="true">&times;</span>
 			        </button>
 				</div>
 				<div class="modal-body">
 					<button class="btn btn-primary btn-lg btn-block" data-dismiss="modal">Conservar</button>
-					<button class="btn btn-danger btn-lg btn-block" ng-click="eliminarFactura(facturaAEliminar)">Eliminar</button>
+					<button class="btn btn-danger btn-lg btn-block" ng-click="eliminarFactura(facturaAEliminar)">Devolver</button>
 				</div>
 			</div>
 		</div>
 	</div>
 	
-	
-	
 	<footer th:replace="layout/layout :: footer"></footer>
 	
 	
-	<script type="text/javascript" th:src="@{/js/factura/nuevaFactura.js}"></script>
+	<script type="text/javascript" th:src="@{/js/factura/nuevaVenta.js}"></script>
 </body>
 </html>

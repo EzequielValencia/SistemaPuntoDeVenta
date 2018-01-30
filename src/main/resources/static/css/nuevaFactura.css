@@ -9,11 +9,11 @@
 	border-left: 1px solid black;
 }
 .modal-lg {
-    min-width: 100%;
+    min-width: 97%;
 }
  
 #contenedorDetalleFactura{
-	height: 500px;
+	height: 450px;
 	overflow-x:auto;
 	overflow-y:auto;	
 } 

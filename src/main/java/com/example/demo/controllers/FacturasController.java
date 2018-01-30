@@ -34,7 +34,7 @@ public class FacturasController {
 	@GetMapping(value="")
 	public String listaFacturas(){
 		
-		return "facturas/listadoFacturas";
+		return "facturas/nuevaVenta";
 	}
 	
 	@GetMapping(value="/listaFacturas")
@@ -57,7 +57,7 @@ public class FacturasController {
 	
 	@GetMapping(value="/nueva")
 	public String nuevaFactura() {
-		return "facturas/nuevaFactura";
+		return "facturas/nuevaVenta";
 	}
 	
 	@GetMapping(value="/nuevaFactura")
@@ -87,7 +87,9 @@ public class FacturasController {
 	
 	@PostMapping(value="/eliminarFactura")
 	public @ResponseBody Boolean eliminarFactura(@RequestBody Factura factura) {
-		facturasServices.delete(factura);
+		factura.setCancelado(true);
+		facturasServices.save(factura);
+		//facturasServices.delete(factura);
 		return new Boolean(true);
 	}
 	

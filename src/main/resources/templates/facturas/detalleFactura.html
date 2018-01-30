@@ -8,7 +8,8 @@
 	<div class="container my-3">
 		<div class="card bg-faded">
 			<div class="card-header">				
-				<h3 th:if="${factura.observacion == null}" th:text="|Venta: ${factura.id}|"></h3>				
+				<h3 th:if="${factura.observacion == null}" class="float-left" th:text="|Venta: ${factura.id}|"></h3>
+				<img th:if="${factura.cancelado!=null and factura.cancelado==true}" class="float-right" alt="" th:src="@{/img/cancelado.png}" style="width: 20%;"/>				
 			</div>
 			
 			<div class="card-block">

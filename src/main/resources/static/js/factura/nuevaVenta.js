@@ -2,6 +2,7 @@ angular.module('SistemaPuntoDeVenta')
 .controller('facturasController',function($scope,$http){
 	$scope.facturaNueva = {};
 	$scope.fechaSolicitada;
+	$scope.facturaAEliminar = {};
 	$scope.codigoProducto='';
 	$scope.listaClientes=[];
 	$scope.clienteAsociado = 0;
@@ -176,10 +177,9 @@ angular.module('SistemaPuntoDeVenta')
 	}
 	
 	$scope.listadoDeVentas = function(){
-		console.log(url_principal+"facturas/listaFacturasPorFecha?fechaSolicitada="+$scope.fechaSolicitada);
 		$http({
 			method:"GET",
-			url:url_principal+"facturas/listaFacturasPorFecha?fechaSolicitada="+$scope.fechaSolicitada
+			url:url_principal+"facturas/listaFacturas"
 		}).then(function succesCallback(data){
 			$scope.facturas = data.data;
 			console.log($scope.facturas);
@@ -216,7 +216,51 @@ angular.module('SistemaPuntoDeVenta')
 	
 	$scope.fechaSeleccionada = function(){
 		$scope.fechaSolicitada = $("#selectorFecha").val();
-		$scope.listadoDeVentas();
+		$scope.listadoDeVentasPorFecha();
 	}
 
+	$scope.listadoDeVentasPorFecha = function(){
+		console.log(url_principal+"facturas/listaFacturasPorFecha?fechaSolicitada="+$scope.fechaSolicitada);
+		$http({
+			method:"GET",
+			url:url_principal+"facturas/listaFacturasPorFecha?fechaSolicitada="+$scope.fechaSolicitada
+		}).then(function succesCallback(data){
+			$scope.facturas = data.data;
+			console.log($scope.facturas);
+		},function errorCallback(e){
+			console.log(e);
+		});
+	}
+
+	$scope.getFactura = function (idFactura){
+		$http({
+			method:"GET",
+			url:url_principal+'facturas/factura?idFactura='+idFactura
+		}).then(function succesCallback(data){
+			$scope.facturaAEliminar = data.data;
+		},function errorCallback(e){
+			console.log(e);
+		});
+	}
+	
+	$scope.eliminarFactura = function(factura){
+		$http({
+			method:"POST",
+			url:url_principal+'facturas/eliminarFactura',
+			data:JSON.stringify(factura)
+		}).then(function succesCallback(data){
+			if(data.data){
+				$("#modalEliminarFactura").modal('hide');
+				$scope.detalleFactura(factura.id);
+				mostrarAlerta("Factura eliminada correctamente","danger");
+			}
+		},function errorCallback(e){
+			mostrarAlerta('Ocurio un error al querer eliminar la factura','succes');
+		});
+	}
+});
+
+$('#modalVentasDelDia').on('hidden.bs.modal', function (e) {
+	$("#contenedorDetalleFactura").empty();
+	$("#contenedorDetalleFactura").removeClass("bg-inverse");
 });

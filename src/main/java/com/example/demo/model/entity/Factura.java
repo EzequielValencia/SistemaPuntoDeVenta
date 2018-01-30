@@ -54,7 +54,20 @@ public class Factura implements Serializable {
 	
 	private Double total;
 
+	private Boolean cancelado;
 	
+	public Boolean getCancelado() {
+		return cancelado;
+	}
+
+
+
+	public void setCancelado(Boolean cancelado) {
+		this.cancelado = cancelado;
+	}
+
+
+
 	public Factura() {
 		itemsFactura = new ArrayList<ItemFactura>();
 	}

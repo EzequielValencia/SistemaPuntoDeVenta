@@ -22,5 +22,3 @@ INSERT INTO clientes (nombre, apellido_paterno,apellido_materno, correo, fecha_c
 INSERT INTO clientes (nombre, apellido_paterno,apellido_materno, correo, fecha_creacion) VALUES('Joe', 'Bloggs','', 'joe.bloggs@gmail.com', '2017-08-23');
 INSERT INTO clientes (nombre, apellido_paterno,apellido_materno, correo, fecha_creacion) VALUES('John', 'Stiles','', 'john.stiles@gmail.com', '2017-08-24');
 INSERT INTO clientes (nombre, apellido_paterno,apellido_materno, correo, fecha_creacion) VALUES('Richard', 'Roe','', 'stiles.roe@gmail.com', '2017-08-25');
-
-
