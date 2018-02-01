@@ -16,20 +16,22 @@
 					ng-model="facturaNueva.observacion" placeholder="Concepto"/>
 			</div>
 		</form> -->
-		<button type="button" class="btn btn-lg btn-danger float-right" data-toggle="modal" data-target="#modalCancelarVenta">Cancelar Venta Actual</button>
 		<form class="form-inline ">
-				  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-				    <div class="input-group-addon">
-				    	<h5><i class="fas fa-barcode"></i></h5>
-				    </div>
-				    <input type="text" 
-				    	ng-model="codigoProducto" 
-				    	class="form-control" id="inlineFormInputGroup" 
-				    	placeholder="Codigo del producto"
-				    	ng-keyup="verificaTeclaPrecionada($event)"/>
-				  </div>
-				  <button type="button" class="btn btn-lg btn-success float-right" ng-click="buscarProducto()">Buscar</button>
+		  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+		    <div class="input-group-addon">
+		    	<h5><i class="fas fa-barcode"></i></h5>
+		    </div>
+		    <input type="text" 
+		    	ng-model="codigoProducto" 
+		    	class="form-control" id="inlineFormInputGroup" 
+		    	placeholder="Codigo del producto"
+		    	ng-keyup="verificaTeclaPrecionada($event)"/>
+		    	<button type="button" class="btn btn-lg btn-success float-right" ng-click="buscarProducto()">Buscar</button>
+		  </div>
+		  
+		  <button type="button" class="btn btn-lg btn-danger float-right" data-toggle="modal" data-target="#modalCancelarVenta">Cancelar Venta Actual</button>
 		</form>
+		
 		<div class="containerTable">
 			<table class="table table-striped table-bordered my-3">
 				<thead class="thead-inverse">
@@ -161,13 +163,14 @@
 							  </div>
 							</div>
 						</form>
-						<div class="table-responsive" id="ventasDelDia">		
+						<div class="table-responsive containerTable" id="ventasDelDia">		
 							<table class="table table-striped table-bordered">
 								<thead>
 									<tr class="thead-inverse">
 										<th class="text-center">Folio</th>
 										<th class="text-center">Fecha</th>
 										<th class="text-center">Total</th>
+										<!--  <th class="text-center">Acciones</th>-->
 										<th class="text-center">Ver</th>
 										<th class="text-center">Eliminar</th>
 									</tr>
@@ -177,15 +180,34 @@
 										<td class="text-center">{{factura.id}}</td>
 										<td class="text-center">{{factura.fechaRealizacion}}</td>
 										<td class="text-center">{{factura.total}}</td>
+										<!--<td>
+											<div class="btn-group">
+											  <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											    Acciones
+											  </button>
+											  <div class="dropdown-menu">
+											    <a class="dropdown-item" href="#" ng-click="detalleFactura(factura.id)">Detalle</a>
+											    <div class="dropdown-divider"></div>
+											    <a class="dropdown-item" href="#" ng-click="getFactura(factura.id)" >Devoluci&oacute;n</a>
+											  </div>
+											</div>
+										</td>-->
 										<td class="text-center">
 											<button type="button" class="btn btn-primary btn-sm" ng-click="detalleFactura(factura.id)">Detalle</button>
 										</td>					
 										<td class="text-center">
 											<button type="button" 
 													class="btn btn-danger btn-sm" 
-													ng-click="getFactura(factura.id)" 
+													ng-click="getFactura(factura.id)"
+													ng-if="!factura.cancelado" 
 													data-toggle="modal" 
 													data-target="#modalEliminarFactura">
+												Devoluci&oacute;n
+											</button>
+											<button type="button" 
+													class="btn btn-danger btn-sm" 
+													ng-if="factura.cancelado" 
+													disabled="disabled">
 												Devoluci&oacute;n
 											</button>
 										</td>
@@ -197,7 +219,7 @@
 					</div>
 					<div class="col-md-6 col-sm-12">
 						<h1 class="text-center">Venta </h1>
-						<div id="contenedorDetalleFactura">
+						<div id="contenedorDetalleFactura" >
 						</div>
 					</div>
 				</div>
